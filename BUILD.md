@@ -45,7 +45,7 @@ Inicie o servidor de desenvolvimento:
 ```
 A API estará disponível em http://127.0.0.1:8000/
 
-### Servidor:
+### Cliente:
 Rode os seguintes comandos, em ordem, para executar o cliente do projeto.
 
 #### 1.Entrar nos arquivos do servidor
