@@ -33,9 +33,8 @@ Todas as dependências necessárias estão listadas no arquivo *Pipfile*. Após 
 ```
 
 #### 5.Configurar o Banco de Dados
-Crie e execute as migrações do Django para configurar o banco de dados:
+Execute as migrações do Django para configurar o banco de dados:
 ```bash
-  python manage.py makemigrations
   python manage.py migrate
 ```
 
