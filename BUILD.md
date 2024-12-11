@@ -1,6 +1,6 @@
 # Sistema de pegada de carbono
 
-## Pré=requisitos:
+## Pré-requisitos:
 - [NodeJS](https://nodejs.org/pt-br/download)
 - [Python](https://www.python.org/downloads/)
 
