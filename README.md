@@ -30,11 +30,7 @@ Fornece recomendações para redução de emissões.
 Integração com APIs: Conecta-se a APIs de terceiros para dados precisos de fatores de emissão.
 
 # Diagrama C4
-Nível 1: Contexto do Sistema
 
-[ Usuário ] --> [ Aplicação Calculadora de Emissão de Carbono ]
-Nível 2: Contêiner
-
-[ Navegador ] --API--> [ Servidor Backend ] --> [ MongoDB ]
+https://lucid.app/users/registerOrLogin/free?showLogin=false&invitationId=inv_99c5e6ef-ab9f-4d43-9a22-527873907b1b&productOpt=chart&invitationType=documentAcceptance&returnUrlOverride=%2Flucidchart%2F8841b607-3a34-48fd-8a48-18e7fa459fa0%2Fedit%3Fviewport_loc%3D424%252C723%252C64%252C31%252C0_0%26invitationId%3Dinv_99c5e6ef-ab9f-4d43-9a22-527873907b1b
 
 
