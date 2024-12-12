@@ -39,6 +39,14 @@
 - Seja paciente: os mantenedores revisam contribuições voluntariamente.
 
 ## Ambiente de Desenvolvimento
+1. Clone o repositório e crie sua branch a partir de main.
+2.
+```bash
+   git checkout -b minha-nova-feature
+```
+3. Faça suas alterações e commit.
+4. Envie para a branch.
+5. Abra um Pull Request.
 
 Para configurar o ambiente local acesse [BUILD.md](/BUILD.md):
 
