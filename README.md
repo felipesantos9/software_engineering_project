@@ -15,7 +15,7 @@ Fomentar a Sustentabilidade: Oferecer recomendações acionáveis para a reduç�
 
 Todos os passos envolvendo as instalações e instruções de uso estão localizadas com detalhes no [BUILD.MD](https://github.com/felipesantos9/software_engineering_project/blob/main/BUILD.md)
 
-## Funcionalidades
+## Requisitos
 **Autenticação de Usuários**: Login e registro seguros para usuários.
 
 **Perfis de Empresas**: Permite que empresas criem e gerenciem perfis.
