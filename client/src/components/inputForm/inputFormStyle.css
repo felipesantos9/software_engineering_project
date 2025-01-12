@@ -9,10 +9,28 @@
     border-width: 1px;
     border-style: solid;
     border-color: #88C425;
+    margin: 5px;
+    text-indent: 5px;
 }
 
 .label-style {
     font-size: 18px;
     font-weight: bold;
     color: #1B676B;
+}
+
+/*Ajustar isso aqui depois (principalmente esse processo de position e o tamanho dele)*/
+.button-style {
+    align-items: center;
+    margin-left: -45px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: transparent;
+    width: 40px;
+    cursor: pointer;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
 }
