@@ -5,57 +5,34 @@ import { useState } from "react";
 interface InputFormProps {
     placeholderText: string;
     labelTitle: string;
-    typeInput: string; // 'text' -> Texto Normal , 'password' -> Senhas (vai ficar aquele bagulhinho escondido :) ) 
+    typeInput: 'text' | 'password' | 'email'; // 'text' -> Texto Normal , 'password' -> Senhas (vai ficar aquele bagulhinho escondido :) ) , 'email' -> Vai verificar o @ 
+    inputId: string;
 }
 
 
-function InputForm({ placeholderText, labelTitle, typeInput}: InputFormProps) {    
-    const [show, setShow] = useState(false); 
+function InputForm({ placeholderText, labelTitle, typeInput, inputId }: InputFormProps) {
+    const [show, setShow] = useState(false);
 
 
-    let type = false;
 
-    if (typeInput == 'password') {
-        // Incluir o botãozinho de mostrar e alterar o placeholderText
-        placeholderText = '********'; // Mudar isso aqui depois!!
-        type = true;
-
-    };
-    
-    function changeMode () {
+    function changeMode() {
         setShow(!show);
-        // Nessa condição aqui já vai estar com a alteração feita antes, então se ligar para não confundir
-        // Colocar as configurações referente ao status da condição 
-        // Ou seja, show == True -> Olho abertinho (alterar o type do input para text e por precaução o placeholder :))
-        // show == False -> Olho fechadinho (alterar o type do input para password e por precaução o placeholder para ********)
-        
-        if (show) {
-            typeInput = 'text';
-            placeholderText = ' ';
-        } else {
-            typeInput = 'password';
-            placeholderText = '********';
-        }
-        
     };
 
-    return(
+    return (
         <form className="form-style">
-        <label className="label-style">{labelTitle}</label> <br/>
+            <label className="label-style">{labelTitle}</label> <br />
             <div className="input-group">
-            <input type={typeInput} placeholder={placeholderText} size={30} maxLength={30} className="input-style"/>
-            {type ? 
-            
-            <button className="button-style" onClick={changeMode}>
-            {show ?  <VscEye/>: <VscEyeClosed/>}
-            </button> 
-            
-            : null}
-            </div>                 
+                <input id={inputId} type={show ? 'text' : 'password'} placeholder={placeholderText} size={30} maxLength={30} className="input-style" defaultValue={'Luis viado'} />
+                {typeInput == 'password' &&
+                    <button className="button-style" type="button" onMouseDown={changeMode} onMouseUp={changeMode} >
+                        {show ? <VscEye /> : <VscEyeClosed />}
+                    </button>
+                }
+            </div>
         </form>
     );
 };
 
-//() => setShow(!show) 
 
 export default InputForm;
