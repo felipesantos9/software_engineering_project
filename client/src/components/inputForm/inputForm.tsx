@@ -13,9 +13,7 @@ interface InputFormProps {
 function InputForm({ placeholderText, labelTitle, typeInput, inputId }: InputFormProps) {
     const [show, setShow] = useState(false);
 
-
-
-    function changeMode() {
+    const changeMode = () => {
         setShow(!show);
     };
 
@@ -23,7 +21,7 @@ function InputForm({ placeholderText, labelTitle, typeInput, inputId }: InputFor
         <form className="form-style">
             <label className="label-style">{labelTitle}</label> <br />
             <div className="input-group">
-                <input id={inputId} type={show ? 'text' : 'password'} placeholder={placeholderText} size={30} maxLength={30} className="input-style" defaultValue={'Luis viado'} />
+                <input id={inputId} type={show ? 'text' : typeInput} placeholder={placeholderText} size={30} maxLength={30} className="input-style" />
                 {typeInput == 'password' &&
                     <button className="button-style" type="button" onMouseDown={changeMode} onMouseUp={changeMode} >
                         {show ? <VscEye /> : <VscEyeClosed />}

@@ -1,0 +1,11 @@
+.button-initial-style {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Roboto';
+    background-color: #88C425;
+    color: #FFFFFF; 
+    width: 350px;
+    height: 40px;
+    border-radius: 10px;
+    border: 0px;
+}

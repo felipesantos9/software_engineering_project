@@ -1,11 +1,11 @@
 .form-style {
-    font-family: "Roboto";
     margin: 10px;
 }
 
 .input-style {
     border-radius: 5px;
     height: 30px;
+    width: 350px;
     border-width: 1px;
     border-style: solid;
     border-color: #88C425;
@@ -16,7 +16,6 @@
 .label-style {
     font-size: 18px;
     font-weight: bold;
-    color: #1B676B;
 }
 
 /*Ajustar isso aqui depois (principalmente esse processo de position e o tamanho dele)*/

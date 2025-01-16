@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router";
+import LoginPage from "./pages/loginPage/loginPage";
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<h1>Hello, World</h1>} />
+        <Route path="/" element={<LoginPage/>} />
       </Routes>
     </BrowserRouter>
   );

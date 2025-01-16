@@ -1,0 +1,11 @@
+.login-icon {
+    height: 46px;
+    width: 46px;
+}
+
+.login-icon-container {
+    text-align: center;
+    padding: 17px;
+    background-color: #88C425;
+    border-radius: 50%;
+}

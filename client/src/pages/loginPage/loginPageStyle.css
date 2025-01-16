@@ -1,0 +1,22 @@
+.loginPage-container {
+    font-family: "Roboto";
+    color: #1B676B;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 800px;
+    border: solid;
+}
+
+.bottom-paragraph-login-elements {
+    /*Estou repetindo essa parte, pois não sei dizer o motivo de ter deixado de estar centralizado, ajustar o CSS depois para não ter que repetir :) */
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.register-text {
+    color: #88C425;
+    margin-top: 20px;
+}
