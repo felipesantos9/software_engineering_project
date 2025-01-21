@@ -71,6 +71,35 @@ class TestManagers(TestCase):
       self.assertFalse(user.is_staff)
       self.assertFalse(user.is_superuser)
 
+    """
+    Tests in create_superuser
+    """
+    @patch.object(UserManager, '_create_user', return_value=get_mock_user(password= 'mocked_hashed_password', is_staff=True, is_superuser=True))
+    def test_sucess_create_superuser_and_call_function_with_correct_parameters(self, mock_create_user):
+      """
+        Test create a valid user with success in create_superuser and call _create_user with correct parameters .
+      """
+  
+      email = valid_email
+      password = valid_password
+      cnpj = valid_cnpj
+      phonenumber = valid_phonenumber
+      
+      extra_fields = get_mock_extra_fields(is_staff=True,is_superuser=True)
+      
+      user = self.user_manager.create_superuser(email, password, name=extra_fields['name'])
+      
+      # checking if the functions calls with correct parameters
+      mock_create_user.assert_called_once_with(email, password, **extra_fields)
+    
+      self.assertEqual(email, user.email)
+      self.assertNotEqual(password, user.password)
+      self.assertEqual(extra_fields['name'], user.name)
+      self.assertEqual(cnpj, user.cnpj)
+      self.assertEqual(phonenumber, user.phonenumber)
+      self.assertTrue(user.is_staff)
+      self.assertTrue(user.is_superuser)
+
   
     """
     Tests in _create_user
