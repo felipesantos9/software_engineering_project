@@ -28,14 +28,18 @@ def get_mock_user(**overrides):
     mock_user.name = user_object['name']
     return mock_user
 
-def get_mock_extra_fields(is_staff=False, is_superuser=False, name=valid_name):
+def get_mock_extra_fields(**overrides):
+  user = get_object_user()
   return {
-      "name": name,
-      "is_staff": is_staff,
-      "is_superuser": is_superuser
+    "name": user["name"],
+    "cnpj": user["cnpj"],
+    "phonenumber": user["phonenumber"],
+    "is_staff": user["is_staff"],
+    "is_superuser": user["is_superuser"],
+    **overrides
   }
 
-class TestManagers(TestCase):
+class UserManagerTest(TestCase):
   
     def setUp(self):
       self.user_manager = UserManager()
@@ -58,7 +62,7 @@ class TestManagers(TestCase):
       
       extra_fields = get_mock_extra_fields()
       
-      user = self.user_manager.create_user(email, password, name=extra_fields['name'])
+      user = self.user_manager.create_user(email, password, **extra_fields)
       
       # checking if the functions calls with correct parameters
       mock_create_user.assert_called_once_with(email, password, **extra_fields)
@@ -68,6 +72,27 @@ class TestManagers(TestCase):
       self.assertEqual(extra_fields['name'], user.name)
       self.assertEqual(cnpj, user.cnpj)
       self.assertEqual(phonenumber, user.phonenumber)
+      self.assertFalse(user.is_staff)
+      self.assertFalse(user.is_superuser)
+      
+    @patch.object(UserManager, '_create_user', return_value=get_mock_user())
+    def test_is_staff_and_is_superuser_is_false(self, mock_create_user):
+      """
+        Test if is_staff and is_superuser is false even if it passes true
+      """
+  
+      email = valid_email
+      password = valid_password
+      
+      extra_fields = get_mock_extra_fields(is_staff=True, is_superuser=True)
+      
+      print(extra_fields)
+      
+      user = self.user_manager.create_user(email, password, **extra_fields )
+      
+      # checking if the functions calls with correct parameters
+      mock_create_user.assert_called_once_with(email, password, **extra_fields)
+    
       self.assertFalse(user.is_staff)
       self.assertFalse(user.is_superuser)
 
@@ -87,7 +112,7 @@ class TestManagers(TestCase):
       
       extra_fields = get_mock_extra_fields(is_staff=True,is_superuser=True)
       
-      user = self.user_manager.create_superuser(email, password, name=extra_fields['name'])
+      user = self.user_manager.create_superuser(email, password, **extra_fields)
       
       # checking if the functions calls with correct parameters
       mock_create_user.assert_called_once_with(email, password, **extra_fields)
