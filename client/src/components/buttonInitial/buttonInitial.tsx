@@ -8,7 +8,7 @@ interface ButtonInitialProps {
 
 function ButtonInitial ({content } : ButtonInitialProps) {
     return(
-        <button className="button-initial-style">
+        <button className="button-initial-style" type="submit">
             {content}
         </button>
     );

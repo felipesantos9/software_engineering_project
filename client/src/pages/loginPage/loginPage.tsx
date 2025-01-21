@@ -4,13 +4,9 @@ import ButtonInitial from "../../components/buttonInitial/buttonInitial";
 import "./loginPageStyle.css";
 
 function LoginPage () {
-    
-    let aoba = true;
-    const teste = () => !aoba;
-    
     return(
-        <div className="loginPage-container">
-            
+        <main className="login-bg">
+        <div className="loginPage-container">            
             <CompanyIcon/>
             <h2>Login</h2>
                 <InputForm 
@@ -38,7 +34,8 @@ function LoginPage () {
                 </div>
             
             </div>
-        </div>  
+        </div>
+        </main> 
     );
 
 };
