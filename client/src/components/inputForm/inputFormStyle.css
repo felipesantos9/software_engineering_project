@@ -1,4 +1,4 @@
-.form-style {
+.input-container-style {
     margin: 10px;
 }
 
@@ -21,11 +21,11 @@
 /*Ajustar isso aqui depois (principalmente esse processo de position e o tamanho dele)*/
 .button-style {
     align-items: center;
-    margin-left: -45px;
-    border: 0px;
+    margin-left: -55px;
+    border: 0px;    
     border-radius: 10px;
     background-color: transparent;
-    width: 40px;
+    width: 60px;
     cursor: pointer;
 }
 

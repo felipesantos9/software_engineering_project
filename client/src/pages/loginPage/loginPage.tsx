@@ -1,13 +1,13 @@
 import InputForm from "../../components/inputForm/inputForm";
-import CompanyIcon from "../../components/companyIcon/companyIcon";
-import ButtonInitial from "../../components/buttonInitial/buttonInitial";
+import Logo from "../../components/logo/logo";
+import FormButton from "../../components/formButton/formButton";
 import "./loginPageStyle.css";
 
 function LoginPage () {
-    return(
-        <main className="login-bg">
+    return(        
+        <form className="login-bg">
         <div className="loginPage-container">            
-            <CompanyIcon/>
+            <Logo/>
             <h2>Login</h2>
                 <InputForm 
             placeholderText="email@email.com"
@@ -19,9 +19,9 @@ function LoginPage () {
             placeholderText="***********"
             inputId="password"
             labelTitle="Senha"
-            typeInput="password" /> 
+            typeInput="password" />       
             
-            <ButtonInitial 
+            <FormButton 
             content="Entrar"/>
             
             <div className="bottom-paragraph-login-elements">
@@ -35,7 +35,7 @@ function LoginPage () {
             
             </div>
         </div>
-        </main> 
+        </form> 
     );
 
 };

@@ -1,12 +1,12 @@
-import "./buttonInitialStyle.css"
+import "./formButtonStyle.css"
 
-interface ButtonInitialProps {
+interface FormButtonProps {
     content: string;
     // onSubmitFunction: () => void; 
 }
 
 
-function ButtonInitial ({content } : ButtonInitialProps) {
+function FormButton ({content } : FormButtonProps) {
     return(
         <button className="button-initial-style" type="submit">
             {content}
@@ -14,4 +14,4 @@ function ButtonInitial ({content } : ButtonInitialProps) {
     );
 };
 
-export default ButtonInitial;
+export default FormButton;
