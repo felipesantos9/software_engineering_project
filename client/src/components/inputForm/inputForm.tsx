@@ -18,17 +18,17 @@ function InputForm({ placeholderText, labelTitle, typeInput, inputId }: InputFor
     };
 
     return (
-        <form className="form-style">
+        <div className="input-container-style">
             <label className="label-style">{labelTitle}</label> <br />
             <div className="input-group">
                 <input id={inputId} type={show ? 'text' : typeInput} placeholder={placeholderText} size={30} maxLength={30} className="input-style" />
                 {typeInput == 'password' &&
                     <button className="button-style" type="button" onMouseDown={changeMode} onMouseUp={changeMode} >
-                        {show ? <VscEye /> : <VscEyeClosed />}
+                        {show ? <VscEye size={20}/> : <VscEyeClosed size={20}/>}
                     </button>
                 }
             </div>
-        </form>
+        </div>
     );
 };
 

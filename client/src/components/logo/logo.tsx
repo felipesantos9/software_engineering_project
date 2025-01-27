@@ -1,8 +1,8 @@
 import { FaTruck } from "react-icons/fa6";
 import { IconContext } from "react-icons"; // Vai servir para fazer as config de CSS
-import "./companyIconStyle.css";
+import "./logoStyle.css";
 
-function CompanyIcon () {
+function Logo () {
     return(
         <div className="login-icon-container">
             <IconContext.Provider value={{'className': 'login-icon'}}>
@@ -12,4 +12,4 @@ function CompanyIcon () {
     );
 };
 
-export default CompanyIcon;
+export default Logo;
