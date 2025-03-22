@@ -1,6 +1,7 @@
 import InputForm from "../../components/inputForm/inputForm";
 import Logo from "../../components/logo/logo";
 import FormButton from "../../components/formButton/formButton";
+import { Link } from "react-router-dom";
 import "./loginPageStyle.css";
 
 function LoginPage () {
@@ -30,7 +31,7 @@ function LoginPage () {
                     </div>
 
                     <div className="register-text">                    
-                        <a>Não tem uma conta? Cadastre-se 🌲</a>
+                        <Link to="/register">Não tem uma conta? Cadastre-se 🌲</Link>
                     </div>
                 
                 </div>
