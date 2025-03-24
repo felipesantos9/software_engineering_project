@@ -44,12 +44,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'drf_spectacular',
+    'corsheaders',
 
     # Local
     'user'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -188,3 +190,5 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
