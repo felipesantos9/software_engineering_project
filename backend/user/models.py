@@ -24,7 +24,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         default=False,
         verbose_name="staff?",
-        help_text=_("Designates whether the user can log into this admin site."),
+        help_text=_(
+            "Designates whether the user can log into this admin site."
+        ),
     )
     is_active = models.BooleanField(
         default=True,
@@ -34,7 +36,10 @@ class User(AbstractBaseUser, PermissionsMixin):
             "Unselect this instead of deleting accounts."
         ),
     )
-    created_at = models.DateTimeField(default=timezone.now, verbose_name="criado em")
+    created_at = models.DateTimeField(
+        default=timezone.now,
+        verbose_name="criado em"
+    )
 
     objects = UserManager()
 
