@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -15,6 +16,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         upload_to='users/pictures/',
         null=True, blank=True,
         verbose_name="Avatar"
+    )
+    cnpj = models.CharField(
+        max_length=14,
+        unique=True,
+        blank=True,
+        null=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{14}$',
+                message="O CNPJ deve conter exatamente 14 dígitos numéricos.",
+                code="invalid_cnpj"
+            )
+        ],
+        verbose_name="CNPJ"
     )
     is_verified = models.BooleanField(
         default=False,
@@ -45,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name',]
+    REQUIRED_FIELDS = ['name', 'cnpj']
 
     class Meta():
         verbose_name = "Usuário"
