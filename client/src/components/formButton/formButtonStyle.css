@@ -1,0 +1,12 @@
+.button-initial-style {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Roboto';
+    margin-top: 20px;
+    background-color: #88C425;
+    color: #FFFFFF; 
+    width: 360px;
+    height: 40px;
+    border-radius: 10px;
+    border: 0px;
+}

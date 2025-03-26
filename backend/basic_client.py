@@ -9,8 +9,10 @@ def test_register():
     url = f"{BASE_URL}auth/users/"
     payload = {
         "name": "testuser",
-        "email": "testuser2@example.com",
+        "email": "teste12@example.com",
         "password": "TestPassword123",
+        "is_staff": True,
+        "is_superuser": True,
     }
     response = requests.post(url, json=payload)
     print("Register User:", response.status_code, response.json())
