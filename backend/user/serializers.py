@@ -10,6 +10,7 @@ class UserSerializer(djoser_serializers.UserSerializer):
             'picture',
             'is_verified',
             'cnpj',
+            'phonenumber',
         )
 
 

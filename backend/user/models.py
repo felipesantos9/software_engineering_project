@@ -31,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ],
         verbose_name="CNPJ"
     )
+    phonenumber = models.CharField(max_length=20, blank=True, null=True)
     is_verified = models.BooleanField(
         default=False,
         verbose_name="verificado?",
