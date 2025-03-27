@@ -9,6 +9,8 @@ class UserSerializer(djoser_serializers.UserSerializer):
         fields = djoser_serializers.UserSerializer.Meta.fields + (
             'picture',
             'is_verified',
+            'cnpj',
+            'phonenumber',
         )
 
 

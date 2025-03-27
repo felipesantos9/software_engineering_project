@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -16,6 +17,21 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True, blank=True,
         verbose_name="Avatar"
     )
+    cnpj = models.CharField(
+        max_length=14,
+        unique=True,
+        blank=True,
+        null=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{14}$',
+                message="O CNPJ deve conter exatamente 14 dígitos numéricos.",
+                code="invalid_cnpj"
+            )
+        ],
+        verbose_name="CNPJ"
+    )
+    phonenumber = models.CharField(max_length=20, blank=True, null=True)
     is_verified = models.BooleanField(
         default=False,
         verbose_name="verificado?",
@@ -24,7 +40,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         default=False,
         verbose_name="staff?",
-        help_text=_("Designates whether the user can log into this admin site."),
+        help_text=_(
+            "Designates whether the user can log into this admin site."
+        ),
     )
     is_active = models.BooleanField(
         default=True,
@@ -34,13 +52,16 @@ class User(AbstractBaseUser, PermissionsMixin):
             "Unselect this instead of deleting accounts."
         ),
     )
-    created_at = models.DateTimeField(default=timezone.now, verbose_name="criado em")
+    created_at = models.DateTimeField(
+        default=timezone.now,
+        verbose_name="criado em"
+    )
 
     objects = UserManager()
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name',]
+    REQUIRED_FIELDS = ['name', 'cnpj']
 
     class Meta():
         verbose_name = "Usuário"
