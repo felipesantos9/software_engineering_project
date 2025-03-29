@@ -9,8 +9,7 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import useUser from "../../hooks/useUser";
-
-
+import get_info_by_token from "../../services/api/info_token";
 
 function LoginPage () {
     const [ message, setMessage ] = useState('');
@@ -30,29 +29,41 @@ function LoginPage () {
         navigate('/');
     }
     }, [navigate, user.auth]);
+   
 
     const login_func = async (content: loginInterface) => {
         // Precisa validar certinho o retorno da API nessa parte aqui para ver se está sendo utilizado uma estrutura correta
-        const { msg, error, token, auth, username, id, role } = await login_request( content );        
-        setMessage(msg);
-
-        localStorage.setItem('USER_TOKEN', token);
-
-        if (error) {
-            toast.error(msg, {duration: 2000});
-            return;
-        };
-
-        if (updateUser) {
-            updateUser({
-                id,
-                auth,
-                token,
-                username,
-                role,
-            });
+        const auth_token  = await login_request( content );         
+        if (auth_token.auth_token) {
+            console.log("estou aqui :)")
+            const data  = await get_info_by_token(auth_token.auth_token);                        
+            if (data) {
+                const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
+                const token = auth_token.auth_token;
+                const auth = true;                
+                if (updateUser) {                                      
+                    updateUser({
+                        name,
+                        cnpj,
+                        id,
+                        email,
+                        picture, 
+                        is_verified,
+                        phone_number,
+                        token,
+                        auth
+                    })
+                }
+                toast.success("Login deu certo :)", {duration:2000});
+            } else {
+                toast.error("Login deu errado :(", {duration:2000})
+            };
+                    
+        } else {
+            toast.error("Login deu errado :(", {duration:2000})
         };
     };
+
     return(               
         <form className="login-bg" onSubmit={handleSubmit(login_func)}>
             <Toaster />
