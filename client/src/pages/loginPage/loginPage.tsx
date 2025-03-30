@@ -3,13 +3,13 @@ import Logo from "../../components/logo/logo";
 import FormButton from "../../components/formButton/formButton";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import login_request from "../../services/api/login_register";
+import loginRequest from "../../services/api/login_register";
 import "./loginPageStyle.css";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import useUser from "../../hooks/useUser";
-import get_info_by_token from "../../services/api/info_token";
+import getInfoToken from "../../services/api/info_token";
 
 function LoginPage () {
     const [ message, setMessage ] = useState('');
@@ -31,16 +31,17 @@ function LoginPage () {
     }, [navigate, user.auth]);
    
 
-    const login_func = async (content: loginInterface) => {
-        // Precisa validar certinho o retorno da API nessa parte aqui para ver se está sendo utilizado uma estrutura correta
-        const auth_token  = await login_request( content );         
-        if (auth_token.auth_token) {
-            console.log("estou aqui :)")
-            const data  = await get_info_by_token(auth_token.auth_token);                        
+    const loginFunc = async (content: loginInterface) => {
+        const authToken  = await loginRequest( content );         
+        if (authToken.auth_token) {            
+            const data  = await getInfoToken(authToken.auth_token);                        
             if (data) {
                 const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
-                const token = auth_token.auth_token;
-                const auth = true;                
+                const token = authToken.auth_token;
+                const auth = true;
+
+                localStorage.setItem('USER_TOKEN', token); // Armazenando o token
+
                 if (updateUser) {                                      
                     updateUser({
                         name,
@@ -65,7 +66,7 @@ function LoginPage () {
     };
 
     return(               
-        <form className="login-bg" onSubmit={handleSubmit(login_func)}>
+        <form className="login-bg" onSubmit={handleSubmit(loginFunc)}>
             <Toaster />
             <div className="loginPage-container">            
                 <Logo/>

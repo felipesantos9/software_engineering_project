@@ -1,6 +1,6 @@
 import api from "../api";
 
-const login_request = async (parameters:loginInterface) => {  
+const loginRequest = async (parameters:loginInterface) => {  
   try {
         const response = await api.post('auth/token/login/', parameters)
         const { data } = response;        
@@ -10,4 +10,4 @@ const login_request = async (parameters:loginInterface) => {
     }
 };
 
-export default login_request;
+export default loginRequest;
