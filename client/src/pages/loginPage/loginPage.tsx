@@ -9,11 +9,12 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import useUser from "../../hooks/useUser";
+import { useCookies } from 'react-cookie';
 import getInfoToken from "../../services/api/info_token";
 
-function LoginPage () {
-    const [ message, setMessage ] = useState('');
+function LoginPage () {    
     const { updateUser, user } = useUser(); 
+    const [cookies, setCookie] = useCookies(["user-token"]);
 
     const navigate = useNavigate();
 
@@ -21,9 +22,38 @@ function LoginPage () {
         register,
         handleSubmit,
         formState: { errors },
-     } = useForm<loginInterface>();
+    } = useForm<loginInterface>();
     
-    
+    useEffect(() => {
+        const getData = async () => {
+            if (cookies["user-token"]) {
+                const data  = await getInfoToken(cookies["user-token"]);
+                if (data) {
+                    const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
+                    const token = cookies["user-token"];
+                    const auth = true;
+
+                    if (updateUser) {                                      
+                        updateUser({
+                            name,
+                            cnpj,
+                            id,
+                            email,
+                            picture, 
+                            is_verified,
+                            phone_number,
+                            token,
+                            auth
+                        })
+                    }
+                };
+            };
+            
+        }
+        getData();
+    }, []);
+
+
     useEffect(() => {
     if (user.auth) {
         navigate('/');
@@ -40,7 +70,9 @@ function LoginPage () {
                 const token = authToken.auth_token;
                 const auth = true;
 
-                localStorage.setItem('USER_TOKEN', token); // Armazenando o token
+                localStorage.setItem('USER_TOKEN', token);
+
+                setCookie('user-token', token);
 
                 if (updateUser) {                                      
                     updateUser({
