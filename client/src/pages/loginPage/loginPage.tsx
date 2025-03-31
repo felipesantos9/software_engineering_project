@@ -3,18 +3,18 @@ import Logo from "../../components/logo/logo";
 import FormButton from "../../components/formButton/formButton";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import login_request from "../../services/api/login_register";
+import loginRequest from "../../services/api/login_register";
 import "./loginPageStyle.css";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import useUser from "../../hooks/useUser";
+import { useCookies, CookiesProvider } from 'react-cookie';
+import getInfoToken from "../../services/api/info_token";
 
-
-
-function LoginPage () {
-    const [ message, setMessage ] = useState('');
+function LoginPage () {    
     const { updateUser, user } = useUser(); 
+    const [cookies, setCookie] = useCookies(["user-token"]);
 
     const navigate = useNavigate();
 
@@ -22,51 +22,96 @@ function LoginPage () {
         register,
         handleSubmit,
         formState: { errors },
-     } = useForm<loginInterface>();
+    } = useForm<loginInterface>();
     
-    
+    useEffect(() => {
+        const getData = async () => {            
+            if (cookies["user-token"]) {
+                const data  = await getInfoToken(cookies["user-token"]);
+                console.log("testeee")
+                if (data) {
+                    const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
+                    const token = cookies["user-token"];
+                    const auth = true;
+
+                    if (updateUser) {                                      
+                        updateUser({
+                            name,
+                            cnpj,
+                            id,
+                            email,
+                            picture, 
+                            is_verified,
+                            phone_number,
+                            token,
+                            auth
+                        })
+                    }
+                };
+            };
+            
+        }
+        getData();
+    }, []);
+
+
     useEffect(() => {
     if (user.auth) {
         navigate('/');
     }
     }, [navigate, user.auth]);
+   
 
-    const login_func = async (content: loginInterface) => {
-        // Precisa validar certinho o retorno da API nessa parte aqui para ver se está sendo utilizado uma estrutura correta
-        const { msg, error, token, auth, username, id, role } = await login_request( content );        
-        setMessage(msg);
+    const loginFunc = async (content: loginInterface) => {
+        const authToken  = await loginRequest( content );         
+        if (authToken.auth_token) {            
+            const data  = await getInfoToken(authToken.auth_token);                        
+            if (data) {
+                const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
+                const token = authToken.auth_token;
+                const auth = true;
 
-        localStorage.setItem('USER_TOKEN', token);
+                localStorage.setItem('USER_TOKEN', token);
 
-        if (error) {
-            toast.error(msg, {duration: 2000});
-            return;
-        };
+                setCookie('user-token', token);
 
-        if (updateUser) {
-            updateUser({
-                id,
-                auth,
-                token,
-                username,
-                role,
-            });
+                if (updateUser) {                                      
+                    updateUser({
+                        name,
+                        cnpj,
+                        id,
+                        email,
+                        picture, 
+                        is_verified,
+                        phone_number,
+                        token,
+                        auth
+                    })
+                }
+                toast.success("Login deu certo :)", {duration:2000});
+            } else {
+                toast.error("Login deu errado :(", {duration:2000})
+            };
+                    
+        } else {
+            toast.error("Login deu errado :(", {duration:2000})
         };
     };
+
     return(               
-        <form className="login-bg" onSubmit={handleSubmit(login_func)}>
-            <Toaster />
+        <form className="login-bg" onSubmit={handleSubmit(loginFunc)}>
+            <Toaster />            
             <div className="loginPage-container">            
                 <Logo/>
                 <h2>Login</h2>
-                    <InputForm 
+                <InputForm 
                 placeholderText="email@email.com"
                 inputId="email"
                 labelTitle="Email"
                 typeInput="text" 
                 register = {register}/>
                 
-                    <InputForm 
+                <InputForm 
                 placeholderText="***********"
                 inputId="password"
                 labelTitle="Senha"
