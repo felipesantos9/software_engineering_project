@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import useUser from "../../hooks/useUser";
-import { useCookies } from 'react-cookie';
+import { useCookies, CookiesProvider } from 'react-cookie';
 import getInfoToken from "../../services/api/info_token";
 
 function LoginPage () {    
@@ -25,9 +25,10 @@ function LoginPage () {
     } = useForm<loginInterface>();
     
     useEffect(() => {
-        const getData = async () => {
+        const getData = async () => {            
             if (cookies["user-token"]) {
                 const data  = await getInfoToken(cookies["user-token"]);
+                console.log("testeee")
                 if (data) {
                     const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
                     const token = cookies["user-token"];
@@ -99,18 +100,18 @@ function LoginPage () {
 
     return(               
         <form className="login-bg" onSubmit={handleSubmit(loginFunc)}>
-            <Toaster />
+            <Toaster />            
             <div className="loginPage-container">            
                 <Logo/>
                 <h2>Login</h2>
-                    <InputForm 
+                <InputForm 
                 placeholderText="email@email.com"
                 inputId="email"
                 labelTitle="Email"
                 typeInput="text" 
                 register = {register}/>
                 
-                    <InputForm 
+                <InputForm 
                 placeholderText="***********"
                 inputId="password"
                 labelTitle="Senha"
