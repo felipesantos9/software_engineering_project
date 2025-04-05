@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,7 +48,8 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Local
-    'user'
+    'user',
+    'estimates',
 ]
 
 MIDDLEWARE = [
@@ -154,8 +156,9 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'djangoapirestful@gmail.com'
-EMAIL_HOST_PASSWORD = 'jlzl lecn uzdp rihz'
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
+CARBON_API_KEY = config("CARBON_API_KEY")
 
 # Django REST Framework
 # https://www.django-rest-framework.org/api-guide/settings/

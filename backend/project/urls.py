@@ -25,6 +25,7 @@ urlpatterns = [
     # Local
     path("", lambda request: HttpResponseRedirect("api/docs/swagger/")),
     path('admin/', admin.site.urls),
+    path("api/estimates/", include("estimates.urls")),
 
     # Thrid-party
     path('api-auth/', include('rest_framework.urls')),
