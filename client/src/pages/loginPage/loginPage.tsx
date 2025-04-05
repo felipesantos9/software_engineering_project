@@ -3,13 +3,8 @@ import Logo from "../../components/logo/logo";
 import FormButton from "../../components/formButton/formButton";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-<<<<<<< HEAD
 import loginRequest from "../../services/api/login_register";
-import "./loginPageStyle.css";
-=======
-import login_request from "../../services/api/login_register";
 import "../../styles/loginUpdateStyle.css";
->>>>>>> feature/update-password-screen
 import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -104,15 +99,9 @@ function LoginPage () {
     };
 
     return(               
-<<<<<<< HEAD
-        <form className="login-bg" onSubmit={handleSubmit(loginFunc)}>
-            <Toaster />            
-            <div className="loginPage-container">            
-=======
-        <form className="general-bg" onSubmit={handleSubmit(login_func)}>
+        <form className="general-bg" onSubmit={handleSubmit(loginFunc)}>
             <Toaster />
             <div className="principal-container">            
->>>>>>> feature/update-password-screen
                 <Logo/>
                 <h2>Login</h2>
                 <InputForm 
