@@ -1,4 +1,8 @@
-.loginPage-container {
+/* 
+Arquivo CSS criado para utilização comum das telas de login, registro de conta e esqueci minha senha.
+*/
+
+.principal-container {
     font-family: "Roboto", serif;
     background-color: white;
     color: #1B676B;
@@ -19,14 +23,12 @@
     border-width: 1px;
 }
 
-.bottom-paragraph-login-elements {
-    /*Estou repetindo essa parte, pois não sei dizer o motivo de ter deixado de estar centralizado, ajustar o CSS depois para não ter que repetir :) */
+.bottom-paragraph-container-elements {
     text-align: center;
     margin-top: 20px;
 }
 
-
-.register-text {
+.highlighted-text {
     color: #88C425;
     margin-top: 20px;
 }
@@ -34,12 +36,12 @@
 html, body {
     height: 100%;
     margin: 0; 
-  }
+}
   
-  .login-bg {
+.general-bg {
     background-color: #EAFDE6;
     height: 100vh; 
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}

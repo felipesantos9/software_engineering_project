@@ -3,8 +3,13 @@ import Logo from "../../components/logo/logo";
 import FormButton from "../../components/formButton/formButton";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
+<<<<<<< HEAD
 import loginRequest from "../../services/api/login_register";
 import "./loginPageStyle.css";
+=======
+import login_request from "../../services/api/login_register";
+import "../../styles/loginUpdateStyle.css";
+>>>>>>> feature/update-password-screen
 import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -99,9 +104,15 @@ function LoginPage () {
     };
 
     return(               
+<<<<<<< HEAD
         <form className="login-bg" onSubmit={handleSubmit(loginFunc)}>
             <Toaster />            
             <div className="loginPage-container">            
+=======
+        <form className="general-bg" onSubmit={handleSubmit(login_func)}>
+            <Toaster />
+            <div className="principal-container">            
+>>>>>>> feature/update-password-screen
                 <Logo/>
                 <h2>Login</h2>
                 <InputForm 
@@ -119,14 +130,15 @@ function LoginPage () {
                 register = {register} />       
                 
                 <FormButton 
-                content="Entrar"/>
+                content="Entrar"
+                darkGreen={false}/>
                 
-                <div className="bottom-paragraph-login-elements">
+                <div className="bottom-paragraph-container-elements">
                     <div>
                         <a>Esqueci a senha</a>
                     </div>
 
-                    <div className="register-text">                    
+                    <div className="highlighted-text">                    
                         <Link to="/register">Não tem uma conta? Cadastre-se 🌲</Link>
                     </div>
                 

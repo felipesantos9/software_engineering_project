@@ -3,10 +3,17 @@
     font-weight: bold;
     font-family: 'Roboto';
     margin-top: 20px;
-    background-color: #88C425;
     color: #FFFFFF; 
     width: 360px;
     height: 40px;
     border-radius: 10px;
     border: 0px;
+}
+
+.green-bg {
+    background-color: #88C425;
+}
+
+.darkGreen-bg {
+    background-color: #1B676B;
 }
