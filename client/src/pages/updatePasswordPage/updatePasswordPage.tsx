@@ -2,7 +2,7 @@ import InputForm from "../../components/inputForm/inputForm";
 import Logo from "../../components/logo/logo";
 import FormButton from "../../components/formButton/formButton";
 import { useForm } from 'react-hook-form';
-import './updatePasswordPageStyle.css';
+import "../../styles/loginUpdateStyle.css";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -30,13 +30,13 @@ function UpdatePasswordPage () {
         
     };
 
-    // Devido à similaridade do CSS, as nomenclaturas são semelhantes ao de login, sendo até mesmo utilizado o mesmo arquivo CSS como referência
     return(               
-        <form className="login-bg" onSubmit={handleSubmit(updateFunc)}>
+        <form className="general-bg" onSubmit={handleSubmit(updateFunc)}>
             <Toaster />
-            <div className="loginPage-container">            
+            <div className="principal-container">            
                 <Logo/>
                 <h2>Atualizar Senha</h2>
+                
                     <InputForm 
                 placeholderText="***********"
                 inputId="newPassword"
@@ -52,7 +52,8 @@ function UpdatePasswordPage () {
                 register = {register} />       
                 
                 <FormButton 
-                content="Atualizar"/>
+                content="Atualizar"
+                darkGreen={false}/>
                                 
             </div>
         </form> 
