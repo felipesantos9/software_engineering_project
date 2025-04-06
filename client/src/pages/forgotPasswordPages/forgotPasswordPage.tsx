@@ -15,6 +15,7 @@ import { forgotPasswordSchema } from "../../schemas/company";
 function ForgotPasswordPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState(false);
+    const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
 
     const {
         register,
@@ -35,16 +36,20 @@ function ForgotPasswordPage() {
     }, [errors]);
 
     const backLogin = () => {
-        navigate('/')
+        navigate(-1);
     };
 
     const sendEmail = async (content: sendEmailInterface) => {
+        setButtonIsDisabled(true);
         const { emailResponse } = await sendEmailRequest(content);
         if (emailResponse) {
             setEmail(true);
         } else {
             toast.error("Error ao tentar enviar o email", { duration: 2000 })
         };
+        setTimeout(() => {
+            setButtonIsDisabled(false);
+        }, 2000);
     };
 
     return (
@@ -63,7 +68,7 @@ function ForgotPasswordPage() {
                     <div className="centralize-content">
                         <InputForm
                             placeholderText="exemplo@exemplo.com"
-                            inputId="forgotPasswordEmail"
+                            inputId="email"
                             labelTitle="Email"
                             typeInput="email"
                             register={register} setValue={setValue} />
@@ -75,7 +80,7 @@ function ForgotPasswordPage() {
                         <FormButton
                             content="Enviar"
                             darkGreen={false}
-                            isDisabled={true} />
+                            isDisabled={buttonIsDisabled} />
 
                         <button className="backButton" type="button" onClick={backLogin}>
                             Voltar
