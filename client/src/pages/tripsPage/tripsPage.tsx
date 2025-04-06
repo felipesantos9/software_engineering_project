@@ -2,6 +2,8 @@ import { useState } from 'react';
 import UnitConverter from 'unit-converter'; // Biblioteca alternativa para conversão de unidades
 import HeaderMain from '../../components/headerMain/headerMain';
 import './tripsPageStyle.css';
+import * as Dialog from '@radix-ui/react-dialog';
+import TripsRegisterPage from '../../components/tripsRegisterModal/tripsRegisterModal';
 
 type WeightUnit = 'g' | 'lb' | 'kg' | 'mt';
 type DistanceUnit = 'mi' | 'km';
@@ -73,7 +75,7 @@ function TripsPage() {
       return numericValue * 0.453592;
     }
 
-    if(unit == 'mt') {
+    if (unit == 'mt') {
       return numericValue * 1000;
     }
 
@@ -95,7 +97,7 @@ function TripsPage() {
     } else if (key === 'weightValue') {
       aValue = convertToKg(a.weightValue);
       bValue = convertToKg(b.weightValue);
-    } else if (key == 'carbon'){
+    } else if (key == 'carbon') {
       aValue = convertToKg(a.carbon);
       bValue = convertToKg(b.carbon);
     }
@@ -171,9 +173,9 @@ function TripsPage() {
   };
 
   return (
-    <>
+    <Dialog.Root>
       <HeaderMain />
-
+      <TripsRegisterPage />
       <div className='container'>
         <div className='group-header'>
           <div>
@@ -181,10 +183,12 @@ function TripsPage() {
             <p className='description'>Insira informações sobre suas emissões de carbono.</p>
           </div>
           <div>
-            <button>Registrar nova viagem</button>
+            <Dialog.Trigger asChild>
+              <button>Registrar nova viagem</button>
+            </Dialog.Trigger>
           </div>
         </div>
-        <div className='trip-form'>
+        <div className='trip-list'>
           <div className='group-header'>
             <div>
               <h3 className='title'>Todos os viagens</h3>
@@ -239,7 +243,7 @@ function TripsPage() {
           </table>
         </div>
       </div>
-    </>
+    </Dialog.Root>
   );
 }
 

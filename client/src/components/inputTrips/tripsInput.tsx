@@ -10,20 +10,6 @@ interface TrisInputProps {
     unit: boolean;
 }
 
-const UnitSelect = (options: (WeightUnit | DistanceUnit)[], values: string[]) => {
-    return (
-        <div className='input-group-select'>
-            <label className="label-style">Unidade utilizada</label> <br />
-            <select className="unit-select-style">
-                {options.map((option, index) => (
-                    <option key={index} value={option}>
-                        {values[index]}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
-}
 
 function TrisInput({
     placeholderText,
@@ -33,12 +19,27 @@ function TrisInput({
     register,
     unit
 }: TrisInputProps) {
+    const UnitSelect = (options: (WeightUnit | DistanceUnit)[], values: string[], name: 'weight_unit' | 'distance_unit') => {
+        return (
+            <div className='input-group-select'>
+                <label className="label-style">Unidade utilizada</label> <br />
+                <select className="unit-select-style"  {...register(name)}>
+                    {options.map((option, index) => (
+                        <option key={index} value={option}>
+                            {values[index]}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        );
+    }
+
     const switchUnit = () => {
         switch (inputId) {
             case "weight_value":
-                return UnitSelect(['g', 'lb', 'kg', 'mt'], ['gramas', 'libras', 'kilos', 'toneladas'])
+                return UnitSelect(['g', 'lb', 'kg', 'mt'], ['gramas', 'libras', 'kilos', 'toneladas'], 'weight_unit')
             case "distance_value":
-                return UnitSelect(['mi', 'km'], ['milhas', 'kilometros']);
+                return UnitSelect(['mi', 'km'], ['milhas', 'kilometros'], 'distance_unit');
         }
     }
 

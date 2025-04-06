@@ -38,27 +38,6 @@
   background: #074245;
 }
 
-.input-style {
-  border-radius: 5px;
-  height: 50px;
-  width: 350px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: #88c425;
-  position: relative;
-  margin: 5px;
-  text-indent: 5px;
-  outline: none;
-  font-size: 18px;
-}
-
-.input-style:hover {
-  border-color: #79ad24;
-}
-.input-style:focus {
-  border-color: #527717;
-}
-
 .search-container {
   position: relative;
   display: flex;
@@ -128,23 +107,32 @@
 .filter-group label input {
   margin-right: 6px;
 }
+.trip-list {
+  border: 1px solid #6d797359;
+  border-radius: 10px;
+  padding: 32px 43px;
+  padding-right: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
 
-
-.trip-form .group-header {
+.trip-list .group-header {
   flex-direction: column;
 }
 
 .reset-button {
-  background-color: transparent!important;
+  background-color: transparent !important;
   border: none;
   outline: none;
-  color: #1b676b!important;
+  color: #1b676b !important;
   cursor: pointer;
 }
 
 .reset-button:hover {
-  color: #0a4043!important;
-
+  color: #0a4043 !important;
 }
 
 @media screen and (max-width: 975px) {
