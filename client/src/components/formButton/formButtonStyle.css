@@ -1,19 +1,25 @@
 .button-initial-style {
-    text-align: center;
-    font-weight: bold;
-    font-family: 'Roboto';
-    margin-top: 20px;
-    color: #FFFFFF; 
-    width: 360px;
-    height: 40px;
-    border-radius: 10px;
-    border: 0px;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Roboto";
+  margin-top: 20px;
+  color: #ffffff;
+  width: 360px;
+  height: 40px;
+  border-radius: 10px;
+  border: 0px;
+  transition: 0.5s;
+  cursor: pointer;
 }
 
 .green-bg {
-    background-color: #88C425;
+  background-color: #88c425;
 }
 
 .darkGreen-bg {
-    background-color: #1B676B;
+  background-color: #1b676b;
+}
+
+.button-initial-style:hover {
+  background-color: #79ad24;
 }

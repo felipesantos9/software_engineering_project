@@ -25,3 +25,11 @@ interface loginContext {
     logoutUser: () => void;
 };
 
+interface RegisterInterface {
+    name: string;
+    cnpj: string;
+    phonenumber: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
