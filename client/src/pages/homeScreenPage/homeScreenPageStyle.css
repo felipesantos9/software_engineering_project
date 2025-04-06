@@ -1,5 +1,7 @@
 .main-style {
     background-color: #EEFFEA;
+    background-repeat: repeat;
+    min-height: 100vh;
 }
 
 .header-style {
@@ -9,7 +11,7 @@
     align-items: center;
     justify-content: space-between;
     height: 109px;
-    margin: 20px;
+    padding: 10px 20px;    
 }
 
 .logo-header {
@@ -100,6 +102,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 70px;
+    padding-bottom: 250px;
 }
 
 .final-content-items {
