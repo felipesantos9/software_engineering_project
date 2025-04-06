@@ -4,11 +4,13 @@ import FormButton from "../../components/formButton/formButton";
 import { useForm } from 'react-hook-form';
 import "../../styles/loginUpdateStyle.css";
 import "./forgotPasswordPageStyle.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import ConfirmIcon from "../../components/confirmIcon/confirmIcon";
 import { sendEmailRequest } from "../../services/api/authRequest";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { forgotPasswordSchema } from "../../schemas/company";
 
 function ForgotPasswordPage() {
     const navigate = useNavigate();
@@ -19,14 +21,24 @@ function ForgotPasswordPage() {
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm<sendEmailInterface>();
+    } = useForm<sendEmailInterface>({
+        resolver: zodResolver(forgotPasswordSchema),
+    });
+
+    useEffect(() => {
+        if (Object.keys(errors).length > 0) {
+            for (const key in errors) {
+                const message = errors[key as keyof sendEmailInterface]?.message as string;
+                toast.error(message, { duration: 2000 });
+            }
+        }
+    }, [errors]);
 
     const backLogin = () => {
         navigate('/')
     };
 
     const sendEmail = async (content: sendEmailInterface) => {
-        console.log(content);
         const { emailResponse } = await sendEmailRequest(content);
         if (emailResponse) {
             setEmail(true);
@@ -36,9 +48,9 @@ function ForgotPasswordPage() {
     };
 
     return (
-        <form className="general-bg" onSubmit={handleSubmit(sendEmail)}>
+        <div className="general-bg" >
             <Toaster />
-            <div className="principal-container">
+            <form className="principal-container" onSubmit={handleSubmit(sendEmail)}>
                 <Logo />
                 <h2>Esqueci a senha</h2>
                 {email ? <div className="centralize-content">
@@ -70,8 +82,8 @@ function ForgotPasswordPage() {
                         </button>
                     </div>
                 }
-            </div>
-        </form>
+            </form>
+        </div>
     );
 
 };

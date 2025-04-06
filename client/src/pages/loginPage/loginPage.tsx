@@ -42,7 +42,7 @@ function LoginPage() {
         if (user.auth) {
             navigate('/');
         }
-    }, []);
+    }, [user]);
 
 
     const loginFunc = async (content: loginInterface) => {
@@ -57,19 +57,17 @@ function LoginPage() {
 
                 setCookie('user-token', token);
 
-                if (updateUser) {
-                    updateUser({
-                        name,
-                        cnpj,
-                        id,
-                        email,
-                        picture,
-                        is_verified,
-                        phone_number,
-                        token,
-                        auth
-                    })
-                }
+                updateUser({
+                    name,
+                    cnpj,
+                    id,
+                    email,
+                    picture,
+                    is_verified,
+                    phone_number,
+                    token,
+                    auth
+                })
                 toast.success("Login deu certo :)", { duration: 2000 });
                 setTimeout(() => {
                     setButtonIsDisabled(false);

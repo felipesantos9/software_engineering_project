@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState, createContext } from "react";
 import { jwtDecode } from 'jwt-decode'; // Codificação do token
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { getInfoToken } from "../services/api/authRequest";
 
 interface IChildrenUserProvider {
   children: ReactNode;
@@ -29,25 +30,31 @@ export default function UserProvider({ children }: IChildrenUserProvider) {
 
   useEffect(() => {
     const verifyToken = async () => {
-      const cookie = cookies["user-token"]; 
+      const cookie = cookies["user-token"];
       if (cookie) {
-        try {
-          console.log(cookie)
-          const tokenDecoded = jwtDecode(cookie) as IJwtPayload;
-          const { username, id, role } = tokenDecoded;
+        const data = await getInfoToken(cookie);
+        if (data) {
+          const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
+          const token = cookie;
+          const auth = true;
+
+          setCookie('user-token', token);
+
           setUser({
-            auth: true,
-            username,
-            token: cookie,
-            id: Number(id),
-            role,
-          });
-        } catch (error: any) {
-          // Depois colocar algum tratamento de erro aqui
-          console.log("deu erro aqui hein xD", error)
+            name,
+            cnpj,
+            id,
+            email,
+            picture,
+            is_verified,
+            phone_number,
+            token,
+            auth
+          })
+
         }
-      }
-    };
+      };
+    }
     verifyToken();
   }, []);
 
