@@ -17,6 +17,7 @@ function ForgotPasswordPage() {
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm<sendEmailInterface>();
 
@@ -47,12 +48,13 @@ function ForgotPasswordPage() {
                     </div>
                 </div>
                     :
-                    <div className="centralize-content"><InputForm
-                        placeholderText="exemplo@exemplo.com"
-                        inputId="forgotPasswordEmail"
-                        labelTitle="Email"
-                        typeInput="email"
-                        register={register} />
+                    <div className="centralize-content">
+                        <InputForm
+                            placeholderText="exemplo@exemplo.com"
+                            inputId="forgotPasswordEmail"
+                            labelTitle="Email"
+                            typeInput="email"
+                            register={register} setValue={setValue} />
 
                         <div className="description-container">
                             <p>Enviaremos um código de verificação a este e-mail se corresponder a uma conta do nosso sistema.</p>

@@ -20,6 +20,7 @@ function LoginPage() {
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm<loginInterface>();
 
@@ -107,14 +108,17 @@ function LoginPage() {
                     inputId="email"
                     labelTitle="Email"
                     typeInput="text"
-                    register={register} />
+                    register={register}
+                    setValue={setValue}
+                />
 
                 <InputForm
                     placeholderText="***********"
                     inputId="password"
                     labelTitle="Senha"
                     typeInput="password"
-                    register={register} />
+                    register={register}
+                    setValue={setValue} />
 
                 <FormButton
                     content="Entrar"
