@@ -67,7 +67,6 @@
   border-collapse: collapse;
   background: white;
   border-radius: 8px;
-  overflow: hidden;
 }
 
 .trips-table th,
@@ -136,4 +135,8 @@
 }
 
 @media screen and (max-width: 975px) {
+  .trips-table { 
+    overflow: auto;
+    display: block;
+}
 }

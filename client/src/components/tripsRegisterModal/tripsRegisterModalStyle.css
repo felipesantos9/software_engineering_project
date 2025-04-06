@@ -63,11 +63,6 @@
   align-items: center;
 }
 
-@media (max-width: 1150px) {
-  .container {
-    width: 100%;
-  }
-}
 
 @media (max-width: 750px) {
   .type-radios {
