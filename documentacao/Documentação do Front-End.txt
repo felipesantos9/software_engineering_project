@@ -1,10 +1,10 @@
-## 💻 Documentação do Front-End
+## Documentação do Front-End
 
-### 📝 Descrição
+### Descrição
 
 A interface do usuário foi projetada para ser intuitiva e responsiva, permitindo o fácil acesso às funcionalidades de cálculo e visualização de dados.
 
-### 🚀 Tecnologias Utilizadas
+### Tecnologias Utilizadas
 
 - **TypeScript**  
   Utilizado por sua tipagem estática, que ajuda a evitar bugs e erros comuns. A ampla comunidade facilita o aprendizado e a resolução de dúvidas. Além disso, integra-se nativamente ao React.
