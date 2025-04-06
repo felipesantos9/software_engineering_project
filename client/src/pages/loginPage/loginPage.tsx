@@ -127,8 +127,8 @@ function LoginPage() {
                 />
 
                 <div className="bottom-paragraph-container-elements">
-                    <div>
-                        <a>Esqueci a senha</a>
+                    <div className="forgoPassword">
+                        <Link to="/forgotpassword">Esqueci a senha</Link>
                     </div>
 
                     <div className="highlighted-text">

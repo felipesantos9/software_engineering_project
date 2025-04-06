@@ -29,8 +29,24 @@ Arquivo CSS criado para utilização comum das telas de login, registro de conta
 }
 
 .highlighted-text {
-    color: #88C425;
     margin-top: 20px;
+}
+.highlighted-text a{
+    color: #88C425;
+    text-decoration: none;
+}
+.highlighted-text a:hover{
+    color: #79ad24;
+    text-decoration: underline;
+}
+
+.forgoPassword a{
+    color: #1B676B;
+    text-decoration: none;
+}
+.forgoPassword a:hover{
+    color: #134b4e;
+    text-decoration: underline;
 }
 
 html, body {
