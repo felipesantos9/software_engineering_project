@@ -156,9 +156,9 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'djangoapirestful@gmail.com'
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="dummy_password")
 
-CARBON_API_KEY = config("CARBON_API_KEY")
+CARBON_API_KEY = config("CARBON_API_KEY", default="dummy_key")
 
 # Django REST Framework
 # https://www.django-rest-framework.org/api-guide/settings/
