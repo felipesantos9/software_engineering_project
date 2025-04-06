@@ -98,9 +98,9 @@ function LoginPage() {
     };
 
     return (
-        <form className="general-bg" onSubmit={handleSubmit(loginFunc)}>
+        <div className="general-bg">
             <Toaster />
-            <div className="principal-container">
+            <form className="principal-container" onSubmit={handleSubmit(loginFunc)}>
                 <Logo />
                 <h2>Login</h2>
                 <InputForm
@@ -136,8 +136,8 @@ function LoginPage() {
                     </div>
 
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     );
 
 };
