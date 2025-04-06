@@ -4,6 +4,7 @@ import RegistrationPage from "./pages/registerPage/registerPage";
 import UpdatePasswordPage from "./pages/updatePasswordPage/updatePasswordPage";
 import ForgotPasswordPage from "./pages/forgotPasswordPages/forgotPasswordPage";
 import HomeScreenPage from "./pages/homeScreenPage/homeScreenPage";
+import TripsRegisterPage from "./pages/tripsRegisterPage/tripsRegisterPage";
 
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
         <Route path="/updatepassword" element={<UpdatePasswordPage/>} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage/>} />
         <Route path="/" element={<HomeScreenPage/>} />
+        <Route path="/trips" element={<TripsRegisterPage/>} />
       </Routes>
     </BrowserRouter>
   );
