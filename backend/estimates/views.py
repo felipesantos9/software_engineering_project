@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view  # noqa
+from drf_spectacular.utils import extend_schema, extend_schema_view
 import requests
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
