@@ -25,6 +25,8 @@ SECRET_KEY = 'django-insecure-v0f+6s96#myg#4e70xk54y0zfi%-c666#6kd0)50rig6wg3nr3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+WEB_APP_DOMAIN = config("WEB_APP_DOMAIN", default="localhost:5173")
+
 ALLOWED_HOSTS = []
 
 
@@ -185,8 +187,11 @@ REST_FRAMEWORK = {
 # https://djoser.readthedocs.io/en/latest/settings.html
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'reset-password/{uid}/{token}',
+    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    "EMAIL": {
+        "password_reset": "user.emails.PasswordResetEmail",
+    },
     'SERIALIZERS': {
         'current_user': 'user.serializers.UserSerializer',
     },
