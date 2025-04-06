@@ -98,7 +98,9 @@ function TripsRegisterPage() {
                         />
                     </div>
                     <div className='buttons'>
-                        <button className='button-cancel'>Cancelar</button>
+                        <Dialog.Close asChild>
+                            <button className='button-cancel'>Cancelar</button>
+                        </Dialog.Close>
                         <button className='button-submit' type='submit'>Registrar nova viagem</button>
 
                     </div>
