@@ -15,6 +15,7 @@ A estrutura do projeto segue um padrão modular, separando os componentes de fro
   - `services/`: funções responsáveis por requisições e lógica externa.
   - `assets/`: imagens e ícones.
   - `styles/`: estilos globais da aplicação.
+  - `types/`:armazenar os types e interfaces do projeto.
 
 Essa organização facilita a manutenção, a reutilização de código e o crescimento da base de código ao longo do tempo.
 
