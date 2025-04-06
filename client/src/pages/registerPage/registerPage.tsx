@@ -25,7 +25,6 @@ export default function RegistrationPage() {
   });
 
   useEffect(() => {
-    console.log(errors)
     if (Object.keys(errors).length > 0) {
       for (const key in errors) {
         const message = errors[key as keyof RegisterInterface]?.message as string;

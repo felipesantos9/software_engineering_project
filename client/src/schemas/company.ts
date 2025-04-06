@@ -27,3 +27,8 @@ export const userRegisterSchema = z
     message: 'As senhas precisam ser iguais.',
     path: ['confirmPassword'],
   });
+  
+export const userLoginSchema = z
+    .object({
+      email: userStandardSchema.email,
+      password: userStandardSchema.password,});

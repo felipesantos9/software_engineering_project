@@ -30,7 +30,7 @@ export const getInfoToken = async (token: string) => {
     const headers = {
       Authorization: `Token ${token}`,
     };
-    const response = await api.post("users/me/", { headers: headers });
+    const response = await api.get("users/me/", { headers: headers });
     const data = response.data;
     return data;
   } catch (error: any) {

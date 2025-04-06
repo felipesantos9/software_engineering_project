@@ -8,11 +8,14 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import useUser from "../../hooks/useUser";
-import { useCookies, CookiesProvider } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import { getInfoToken, loginRequest } from "../../services/api/authRequest";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userLoginSchema } from "../../schemas/company";
 
 function LoginPage() {
     const { updateUser, user } = useUser();
+    const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
     const [cookies, setCookie] = useCookies(["user-token"]);
 
     const navigate = useNavigate();
@@ -22,46 +25,28 @@ function LoginPage() {
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm<loginInterface>();
+    } = useForm<loginInterface>({
+        resolver: zodResolver(userLoginSchema),
+    });
 
     useEffect(() => {
-        const getData = async () => {
-            if (cookies["user-token"]) {
-                const data = await getInfoToken(cookies["user-token"]);
-                console.log("testeee")
-                if (data) {
-                    const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
-                    const token = cookies["user-token"];
-                    const auth = true;
-
-                    if (updateUser) {
-                        updateUser({
-                            name,
-                            cnpj,
-                            id,
-                            email,
-                            picture,
-                            is_verified,
-                            phone_number,
-                            token,
-                            auth
-                        })
-                    }
-                };
-            };
+        if (Object.keys(errors).length > 0) {
+            for (const key in errors) {
+                const message = errors[key as keyof loginInterface]?.message as string;
+                toast.error(message, { duration: 2000 });
+            }
         }
-        getData();
-    }, []);
-
+    }, [errors]);
 
     useEffect(() => {
         if (user.auth) {
             navigate('/');
         }
-    }, [navigate, user.auth]);
+    }, []);
 
 
     const loginFunc = async (content: loginInterface) => {
+        setButtonIsDisabled(true);
         const authToken = await loginRequest(content);
         if (authToken.auth_token) {
             const data = await getInfoToken(authToken.auth_token);
@@ -69,8 +54,6 @@ function LoginPage() {
                 const { name, cnpj, id, email, picture, is_verified, phone_number } = data;
                 const token = authToken.auth_token;
                 const auth = true;
-
-                localStorage.setItem('USER_TOKEN', token);
 
                 setCookie('user-token', token);
 
@@ -88,13 +71,18 @@ function LoginPage() {
                     })
                 }
                 toast.success("Login deu certo :)", { duration: 2000 });
-            } else {
-                toast.error("Login deu errado :(", { duration: 2000 })
-            };
+                setTimeout(() => {
+                    setButtonIsDisabled(false);
+                    navigate('/');
+                }, 2000);
+                return;
+            }
+        }
 
-        } else {
-            toast.error("Login deu errado :(", { duration: 2000 })
-        };
+        toast.error("Login deu errado :(", { duration: 2000 })
+        setTimeout(() => {
+            setButtonIsDisabled(false);
+        }, 2000);
     };
 
     return (
@@ -123,7 +111,7 @@ function LoginPage() {
                 <FormButton
                     content="Entrar"
                     darkGreen={false}
-                    isDisabled={true}
+                    isDisabled={buttonIsDisabled}
                 />
 
                 <div className="bottom-paragraph-container-elements">
