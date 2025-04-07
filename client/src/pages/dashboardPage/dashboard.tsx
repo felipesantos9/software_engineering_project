@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HeaderMain from "../../components/headerMain/headerMain";
 import "./dashboardPageStyle.css";
+import { getEstimates } from "../../services/api/tripsRequest";
 import {
   PieChart,
   Pie,
@@ -20,6 +21,38 @@ interface InfoProps {
 
 export default function DashboardPage() {
   const [button, setButton] = useState<"yearly" | "monthly">("yearly");
+
+  // Estados para armazenar os dados da API
+  const [totalEmissions, setTotalEmissions] = useState<string>("Carregando...");
+  const [carbonIntensity, setCarbonIntensity] = useState<string>("Carregando...");
+  const [averageEmissionPerRoute, setAverageEmissionPerRoute] = useState<string>("Carregando...");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("user-token");      
+      console.log(token)
+      console.log("testee")
+      if (token) {
+        const data = await getEstimates(token, "9999-12-31", "1970-01-01");
+
+        if (data && typeof data === "object") {
+          setTotalEmissions(data.additionalProp1 ?? "N/A");
+          setCarbonIntensity(data.additionalProp2 ?? "N/A");
+          setAverageEmissionPerRoute(data.additionalProp3 ?? "N/A");
+        } else {
+          setTotalEmissions("Erro");
+          setCarbonIntensity("Erro");
+          setAverageEmissionPerRoute("Erro");
+        }
+      } else {
+        setTotalEmissions("Sem token");
+        setCarbonIntensity("Sem token");
+        setAverageEmissionPerRoute("Sem token");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const Info = (info: InfoProps) => {
     return (
@@ -84,10 +117,9 @@ export default function DashboardPage() {
             </form>
           </div>
           <div className="infos">
-            <Info title="Emissões totais" value="93.920 tCO2" />
-            <Info title="Intensidade de Carbono" value="0.536 kg CO2 / km" />
-            <Info title="Média de emissão por rota" value="245 CO2" />
-            <Info title="Rotas com nivéis acima do recomendado" value="21" />
+            <Info title="Emissões totais" value={totalEmissions} />
+            <Info title="Intensidade de Carbono" value={carbonIntensity} />
+            <Info title="Média de emissão por rota" value={averageEmissionPerRoute} />
           </div>
           <div className="graphs">
             <div>

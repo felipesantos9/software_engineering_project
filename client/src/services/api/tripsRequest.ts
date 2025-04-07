@@ -14,3 +14,20 @@ export const tripRegisterRequest = async (parameters: TripInterface) => {
         return data;
     }
 };
+
+export const getEstimates = async (token: string, endDate: string, startDate: string) => {
+    try {
+      const headers = {
+        Authorization: `Token ${token}`,
+      };
+      const params = {
+        start_date: startDate,
+        end_date: endDate,
+      };
+      const response = await api.get("estimates/dashboard/", { headers, params });
+      const data = response.data;
+      return data;
+    } catch (error: any) {
+      return error.code;
+    }
+  };
