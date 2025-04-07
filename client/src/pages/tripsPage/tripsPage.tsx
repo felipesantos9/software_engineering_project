@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import useUser from '../../hooks/useUser';
-import UnitConverter from 'unit-converter'; // Biblioteca alternativa para conversão de unidades
 import HeaderMain from '../../components/headerMain/headerMain';
 import './tripsPageStyle.css';
 import * as Dialog from '@radix-ui/react-dialog';
-import TripsRegisterPage from '../../components/tripsRegisterModal/tripsRegisterModal';
+import { getTrips } from '../../services/api/tripsRequest'; // Importa o serviço para buscar viagens
+import TripsRegisterModal from '../../components/tripsRegisterModal/tripsRegisterModal';
 
 type WeightUnit = 'g' | 'lb' | 'kg' | 'mt';
 type DistanceUnit = 'mi' | 'km';
@@ -23,76 +23,53 @@ function TripsPage() {
   const { user } = useUser();
   const navigate = useNavigate();
 
+  const [trips, setTrips] = useState<TripData[]>([]); // Estado para armazenar as viagens
+  const [filters, setFilters] = useState<TransportMethod[]>([]);
+  const [tripsFiltered, setFilteredTrips] = useState<TripData[] | null>(null);
+  const [sortConfig, setSortConfig] = useState<{ key: keyof TripData; direction: 'asc' | 'desc' } | null>(null);
+
   useEffect(() => {
-    if (user.auth == false) {    
-      navigate('/login')
-    } 
+    if (!user.auth) {
+      navigate('/login');
+    } else {
+      fetchTrips(); // Busca as viagens ao carregar a página
+    }
   }, []);
 
-  const [trips] = useState<TripData[]>([
-    {
-      id: 1,
-      transportMethod: "truck",
-      distanceValue: "500 km",
-      weightValue: "11 mt",
-      carbon: "150 kg CO2",
-      date: new Date("2023-01-15")
-    },
-    {
-      id: 2,
-      transportMethod: "train",
-      distanceValue: "1200 km",
-      weightValue: "4000 lb",
-      carbon: "300 kg CO2",
-      date: new Date("2023-02-10")
-    },
-    {
-      id: 3,
-      transportMethod: "ship",
-      distanceValue: "3000 km",
-      weightValue: "2266.962 kg",
-      carbon: "800 kg CO2",
-      date: new Date("2023-03-05")
-    },
-    {
-      id: 4,
-      transportMethod: "plane",
-      distanceValue: "1500 km",
-      weightValue: "1000 kg",
-      carbon: "1200 kg CO2",
-      date: new Date("2023-04-20")
+  const fetchTrips = async () => {
+    try {
+      const response = await getTrips(user.token!); // Chama o serviço para buscar as viagens
+      const formattedTrips = response.map((trip: any) => ({
+        id: trip.id,
+        transportMethod: trip.transport_method,
+        distanceValue: `${trip.distance_value} ${trip.distance_unit}`,
+        weightValue: `${trip.weight_value} ${trip.weight_unit}`,
+        carbon: `${trip.carbon_kg} kg`,
+        date: new Date(trip.created_at),
+      }));
+      setTrips(formattedTrips);
+    } catch (error) {
+      console.error('Erro ao buscar viagens:', error);
     }
-  ]);
-
-  const [filters, setFilters] = useState<TransportMethod[]>([]);
-
-  const [tripsFiltered, setFilteredTrips] = useState<TripData[] | null>(null);
-
-  const [sortConfig, setSortConfig] = useState<{ key: keyof TripData; direction: 'asc' | 'desc' } | null>(null);
+  };
 
   const convertToKm = (distance: string): number => {
     const [value, unit] = distance.split(' ') as [string, DistanceUnit];
     const numericValue = parseFloat(value);
-    return unit === 'km'
-      ? numericValue
-      : UnitConverter(numericValue, unit).to('km');
+    return unit === 'km' ? numericValue : numericValue * 1.60934; // Conversão manual para km
   };
 
   const convertToKg = (weight: string): number => {
-    weight = weight.replace(" CO2", "");
+    weight = weight.replace(' CO2', '');
     const [value, unit] = weight.split(' ') as [string, WeightUnit];
     const numericValue = parseFloat(value);
-    if (unit == 'lb') {
+    if (unit === 'lb') {
       return numericValue * 0.453592;
     }
-
-    if (unit == 'mt') {
+    if (unit === 'mt') {
       return numericValue * 1000;
     }
-
-    return unit === 'kg'
-      ? numericValue
-      : UnitConverter(numericValue, unit).to('kg');
+    return numericValue;
   };
 
   const sortedTrips = (tripsFiltered ?? trips).slice().sort((a, b) => {
@@ -108,7 +85,7 @@ function TripsPage() {
     } else if (key === 'weightValue') {
       aValue = convertToKg(a.weightValue);
       bValue = convertToKg(b.weightValue);
-    } else if (key == 'carbon') {
+    } else if (key === 'carbon') {
       aValue = convertToKg(a.carbon);
       bValue = convertToKg(b.carbon);
     }
@@ -127,28 +104,6 @@ function TripsPage() {
     });
   };
 
-  const getSortIndicator = (key: keyof TripData) => {
-    if (!sortConfig || sortConfig.key !== key) {
-      return (
-        <>
-          <span style={{ opacity: 0.3 }}>▲</span>
-          <span style={{ opacity: 0.3 }}>▼</span>
-        </>
-      );
-    }
-    return sortConfig.direction === 'asc' ? (
-      <>
-        <span style={{ fontWeight: 'bold' }}>▲</span>
-        <span style={{ opacity: 0.3 }}>▼</span>
-      </>
-    ) : (
-      <>
-        <span style={{ opacity: 0.3 }}>▲</span>
-        <span style={{ fontWeight: 'bold' }}>▼</span>
-      </>
-    );
-  };
-
   const clearFilter = () => {
     setFilteredTrips(null);
     setFilters([]);
@@ -157,16 +112,16 @@ function TripsPage() {
   };
 
   const keys: Record<string, TransportMethod> = {
-    "Avião": "plane",
-    "Caminhão": "truck",
-    "Trem": "train",
-    "Navio": "ship",
+    Avião: 'plane',
+    Caminhão: 'truck',
+    Trem: 'train',
+    Navio: 'ship',
   };
   const keysMethods: Record<TransportMethod, string> = {
-    plane: "Avião",
-    truck: "Caminhão",
-    train: "Trem",
-    ship: "Navio",
+    plane: 'Avião',
+    truck: 'Caminhão',
+    train: 'Trem',
+    ship: 'Navio',
   };
 
   const changeFilter = (element: HTMLInputElement) => {
@@ -174,8 +129,7 @@ function TripsPage() {
     if (checked) filters.push(keys[value]);
     else filters.splice(filters.indexOf(keys[value]), 1);
 
-
-    if (filters.length == 0) {
+    if (filters.length === 0) {
       setFilteredTrips(null);
       return;
     }
@@ -186,26 +140,27 @@ function TripsPage() {
   return (
     <Dialog.Root>
       <HeaderMain />
-      <TripsRegisterPage />
-      <div className='container'>
-        <div className='group-header'>
+      <TripsRegisterModal/>
+      <div className="container">
+        <div className="group-header">
           <div>
-            <h2 className='title'>Registro de viagens</h2>
-            <p className='description'>Insira informações sobre suas emissões de carbono.</p>
+            <h2 className="title">Registro de viagens</h2>
+            <p className="description">Insira informações sobre suas emissões de carbono.</p>
           </div>
           <div>
+
             <Dialog.Trigger asChild>
               <button>Registrar nova viagem</button>
             </Dialog.Trigger>
           </div>
         </div>
-        <div className='trip-list'>
-          <div className='group-header'>
+        <div className="trip-list">
+          <div className="group-header">
             <div>
-              <h3 className='title'>Todos os viagens</h3>
-              <p className='description'>Registre as viagens de transporte de cargas</p>
+              <h3 className="title">Todas as viagens</h3>
+              <p className="description">Registre as viagens de transporte de cargas</p>
             </div>
-            <div className='filter-group'>
+            <div className="filter-group">
               <p>Meio de transporte:</p>
               <label>
                 <input type="checkbox" name="transportMethod" onChange={(event) => changeFilter(event.target)} value="Avião" />
@@ -223,7 +178,7 @@ function TripsPage() {
                 <input type="checkbox" name="transportMethod" onChange={(event) => changeFilter(event.target)} value="Navio" />
                 Navio
               </label>
-              <button className='reset-button' onClick={clearFilter}>
+              <button className="reset-button" onClick={clearFilter}>
                 Limpar
               </button>
             </div>
@@ -231,12 +186,12 @@ function TripsPage() {
           <table className="trips-table">
             <thead>
               <tr>
-                <th onClick={() => handleSort('id')}>ID {getSortIndicator('id')}</th>
-                <th onClick={() => handleSort('transportMethod')}>Meio de transporte {getSortIndicator('transportMethod')}</th>
-                <th onClick={() => handleSort('date')}>Data {getSortIndicator('date')}</th>
-                <th onClick={() => handleSort('distanceValue')}>Distância total {getSortIndicator('distanceValue')}</th>
-                <th onClick={() => handleSort('weightValue')}>Peso total {getSortIndicator('weightValue')}</th>
-                <th onClick={() => handleSort('carbon')}>Emissão de carbono {getSortIndicator('carbon')}</th>
+                <th onClick={() => handleSort('id')}>ID</th>
+                <th onClick={() => handleSort('transportMethod')}>Meio de transporte</th>
+                <th onClick={() => handleSort('date')}>Data</th>
+                <th onClick={() => handleSort('distanceValue')}>Distância total</th>
+                <th onClick={() => handleSort('weightValue')}>Peso total</th>
+                <th onClick={() => handleSort('carbon')}>Emissão de carbono</th>
               </tr>
             </thead>
             <tbody>

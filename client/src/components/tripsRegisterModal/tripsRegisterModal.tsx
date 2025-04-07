@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
-import HeaderMain from '../headerMain/headerMain';
+import { useNavigate } from 'react-router-dom';
 import './tripsRegisterModalStyle.css';
 import TrisInput from '../inputTrips/tripsInput';
-import { tripSchema } from '../../schemas/trip';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import toast, { Toaster } from 'react-hot-toast';
 import { tripRegisterRequest } from '../../services/api/tripsRequest';
 import { Dialog } from "radix-ui";
 import { RxCross1 } from "react-icons/rx";
+import useUser from '../../hooks/useUser';
 
 function TripsRegisterPage() {
-
+    const navigate = useNavigate();
+    const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
+    const { user } = useUser();
     const {
         register,
         handleSubmit,
-        setValue,
+        reset,
         formState: { errors },
     } = useForm<TripInterface>({
-        resolver: zodResolver(tripSchema),
     });
 
     useEffect(() => {
@@ -38,24 +38,38 @@ function TripsRegisterPage() {
     };
 
     const registerFunc = async (content: TripInterface) => {
-        console.log("testetestests")
-        const data = await tripRegisterRequest(content);
-        if (data) {
-            toast.success("Registro realizado com sucesso!", {duration: 2000})
-        } else {
-            toast.error("Falha ao criar o registro. Tente novamente!", {duration: 2000})
-        };
+        setButtonIsDisabled(true);
+        try {
+            const response = await tripRegisterRequest(content, user.token!);
+
+            if (response) {
+                toast.success("Registro realizado com sucesso!", { duration: 2000 });
+                setTimeout(() => {
+                    setButtonIsDisabled(false);
+                    navigate('/trips');
+                    toast.success("Registro realizado com sucesso!", { duration: 2000 });
+                    reset();
+                }, 2000);
+                return;
+            }
+
+            toast.error("Falha ao criar o registro. Tente novamente!", { duration: 2000 });
+        } catch (error) {
+            toast.error("Erro inesperado. Tente novamente!", { duration: 2000 });
+        } finally {
+            setButtonIsDisabled(false);
+        }
     };
 
-    return (        
+    return (
         <Dialog.Portal>
             <Dialog.Overlay className="DialogOverlay" />
             <Dialog.Content className="DialogContent">
                 <Dialog.Title></Dialog.Title>
+                <Toaster />
                 <form className='trip-form' onSubmit={handleSubmit(registerFunc)}>
                     <div className='header-group'>
                         <div>
-
                             <h3 className='title'>Transporte de cargas</h3>
                             <p className='description'>Registre as emissões relacionadas ao transporte de cargas</p>
                         </div>
@@ -87,7 +101,10 @@ function TripsRegisterPage() {
                         />
                         <div className='input-group-select'>
                             <label className="label-style">Método de transporte</label> <br />
-                            <select className="method-select-style" name='transport_method'>
+                            <select
+                                className="method-select-style"
+                                {...register('transport_method')}
+                            >
                                 {Object.keys(keysMethods).map((option, index) => (
                                     <option key={index} value={option}>
                                         {keysMethods[option as TransportMethod]}
@@ -106,17 +123,16 @@ function TripsRegisterPage() {
                     </div>
                     <div className='buttons'>
                         <Dialog.Close asChild>
-                            <button className='button-cancel'>Cancelar</button>
+                            <button className='button-cancel' disabled={buttonIsDisabled}>Cancelar</button>
                         </Dialog.Close>
-                        <button className='button-submit' type='submit'>Registrar nova viagem</button>
+                        <button className='button-submit' type='submit' disabled={buttonIsDisabled}>
+                            Registrar nova viagem
+                        </button>
 
                     </div>
                 </form>
-
             </Dialog.Content>
-
         </Dialog.Portal>
-
     );
 }
 

@@ -1,5 +1,4 @@
 import './tripsInputStyle.css';
-import { useState } from 'react';
 
 interface TrisInputProps {
     placeholderText: string;
@@ -51,8 +50,6 @@ function TrisInput({
                     id={inputId}
                     type={typeInput}
                     placeholder={placeholderText}
-                    size={30}
-                    maxLength={30}
                     className="input-style"
                     required
                     {...register(inputId.toString())}

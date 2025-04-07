@@ -54,7 +54,7 @@ function HeaderMain() {
 
                 <ButtonOption
                 content="Dashboard"
-                path="/"/>
+                path="/dashboard"/>
 
                 <ButtonOption
                 content="Relatório"

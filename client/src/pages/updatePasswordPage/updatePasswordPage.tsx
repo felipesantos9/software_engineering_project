@@ -3,22 +3,16 @@ import Logo from "../../components/logo/logo";
 import FormButton from "../../components/formButton/formButton";
 import { useForm } from 'react-hook-form';
 import "../../styles/loginUpdateStyle.css";
-import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import useUser from "../../hooks/useUser";
 
 function UpdatePasswordPage() {
     // Em tese, deveria ser usado o context que vai armazenar o email e aquele id de confirmação para fazer as alterações com sucesso 
     //const { updateUser, user } = useUser(); 
 
-    const navigate = useNavigate();
-
     const {
         register,
         handleSubmit,
         setValue,
-        formState: { errors },
     } = useForm<passwordsInterface>();
 
 
