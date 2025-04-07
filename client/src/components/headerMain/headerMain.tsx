@@ -46,18 +46,9 @@ function HeaderMain() {
             </div>
 
             <div className="headerMain-center-options">                
-                
-                <ButtonOption
-                content="Início"
-                path="/"/>
-
                 <ButtonOption
                 content="Dashboard"
                 path="/dashboard"/>
-
-                <ButtonOption
-                content="Relatório"
-                path="/trips"/>
 
                 <ButtonOption
                 content="Registrar Dados"
