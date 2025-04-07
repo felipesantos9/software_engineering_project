@@ -95,6 +95,7 @@ class ShippingEstimateView(APIView):
 class ListEstimatesView(ListAPIView):
     serializer_class = ListEstimatesSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = None  # Disable pagination for this view
 
     def get_queryset(self):
         return CarbonEstimate.objects.filter(user=self.request.user).order_by('-created_at') # noqa
