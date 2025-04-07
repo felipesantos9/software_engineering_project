@@ -33,4 +33,7 @@ A API backend é responsável por receber os dados do usuário, processar os cá
 - **Flake8**  
   Ferramenta de linting que verifica a conformidade com o padrão PEP 8, mantendo a qualidade e consistência do código.
 
+- **reportlab**  
+  Ferramenta de criação e edição de arquivos PDF, usada para a geração de relatórios escritos de forma programática.
+
 ---
