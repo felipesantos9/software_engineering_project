@@ -27,7 +27,7 @@ DEBUG = True
 
 WEB_APP_DOMAIN = config("WEB_APP_DOMAIN", default="localhost:5173")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
