@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import HeaderMain from "../../components/headerMain/headerMain";
 import "./dashboardPageStyle.css";
+import useUser from "../../hooks/useUser";
 import { getEstimates } from "../../services/api/tripsRequest";
 import {
   PieChart,
@@ -21,6 +22,7 @@ interface InfoProps {
 
 export default function DashboardPage() {
   const [button, setButton] = useState<"yearly" | "monthly">("yearly");
+  const { user } = useUser();
 
   // Estados para armazenar os dados da API
   const [totalEmissions, setTotalEmissions] = useState<string>("Carregando...");
@@ -29,9 +31,8 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem("user-token");      
-      console.log(token)
-      console.log("testee")
+      const token = user.token;  
+      console.log(token);    
       if (token) {
         const data = await getEstimates(token, "9999-12-31", "1970-01-01");
 

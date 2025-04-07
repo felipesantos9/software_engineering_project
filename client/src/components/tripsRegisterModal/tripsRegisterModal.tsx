@@ -11,7 +11,7 @@ import { Dialog } from "radix-ui";
 import { RxCross1 } from "react-icons/rx";
 
 function TripsRegisterPage() {
-
+    
     const {
         register,
         handleSubmit,
