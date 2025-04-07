@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ShippingEstimateView, ListEstimatesView, EmissionsReportPDFView  # noqa
+from .views import ShippingEstimateView, ListEstimatesView, EmissionsReportPDFView, DashboardDataView  # noqa
 
 urlpatterns = [
     path(
@@ -16,5 +16,10 @@ urlpatterns = [
         "relatorio-emissoes/",
         EmissionsReportPDFView.as_view(),
         name="relatorio-emissoes",
+    ),
+    path(
+        "dashboard/",
+        DashboardDataView.as_view(),
+        name="dashboard",
     ),
 ]

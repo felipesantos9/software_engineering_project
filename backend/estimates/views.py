@@ -12,7 +12,7 @@ from collections import defaultdict
 from django.conf import settings
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import make_aware
-from django.db.models import Count
+from django.db.models import Sum, Avg, F, ExpressionWrapper, FloatField, Count, Case, When, Value  # noqa
 from django.http import HttpResponse
 
 from datetime import datetime
@@ -124,7 +124,6 @@ class EmissionsReportPDFView(APIView):
             "impressão."
         ),
         tags=["Relatórios"],
-        responses={200: {"content": {"application/pdf": {}}}},
         parameters=[
             OpenApiParameter(
                 name="start_date",
@@ -313,4 +312,114 @@ class EmissionsReportPDFView(APIView):
                 f"inline; filename=relatorio_emissoes_"
                 f"{start_date.date()}_a_{end_date.date()}.pdf"
             )
+        })
+
+
+class DashboardDataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="start_date",
+                description="Data inicial no formato ISO (yyyy-mm-dd)",
+                required=True,
+                type=OpenApiTypes.DATE,
+            ),
+            OpenApiParameter(
+                name="end_date",
+                description="Data final no formato ISO (yyyy-mm-dd)",
+                required=True,
+                type=OpenApiTypes.DATE,
+            ),
+        ],
+        responses={
+            200: OpenApiTypes.OBJECT,
+            400: OpenApiTypes.OBJECT,
+        },
+        summary="Dados agregados para o dashboard de emissões",
+        description=(
+            "Retorna métricas de emissões de carbono filtradas por período "
+            "para alimentar o dashboard analítico."
+        ),
+    )
+    def get(self, request):
+        try:
+            start_date = make_aware(datetime.fromisoformat(request.query_params["start_date"]))
+            end_date = make_aware(datetime.fromisoformat(request.query_params["end_date"]))
+        except Exception:
+            raise ValidationError(
+                "Parâmetros 'start_date' e 'end_date' devem estar no formato ISO: yyyy-mm-dd"
+            )
+
+        estimates = CarbonEstimate.objects.filter(
+            user=request.user,
+            estimated_at__range=(start_date, end_date)
+        )
+
+        if not estimates.exists():
+            raise ValidationError("Nenhuma estimativa encontrada para o período selecionado.")
+
+        total_emissions_kg = estimates.aggregate(total=Sum("carbon_kg"))["total"]
+
+        # Carbon intensity por registro: carbon_kg / (distance_value km * weight_value mt)
+        WEIGHT_CONVERSIONS = {
+            "g": 1 / 1_000_000,
+            "kg": 1 / 1000,
+            "lb": 0.000453592,
+            "mt": 1,
+        }
+
+        DISTANCE_CONVERSIONS = {
+            "km": 1,
+            "mi": 1.60934,
+        }
+
+        # Anotação com conversões aplicadas
+        estimates_with_intensity = estimates.annotate(
+            converted_weight=Case(
+                *[When(weight_unit=unit, then=F("weight_value") * Value(factor)) for unit, factor in WEIGHT_CONVERSIONS.items()],
+                output_field=FloatField()
+            ),
+            converted_distance=Case(
+                *[When(distance_unit=unit, then=F("distance_value") * Value(factor)) for unit, factor in DISTANCE_CONVERSIONS.items()],
+                output_field=FloatField()
+            )
+        ).annotate(
+            intensity=ExpressionWrapper(
+                F("carbon_kg") / (F("converted_weight") * F("converted_distance")),
+                output_field=FloatField()
+            )
+        )
+
+        avg_carbon_intensity = estimates_with_intensity.aggregate(avg=Avg("intensity"))["avg"]
+
+        avg_emission_per_route = estimates.aggregate(avg=Avg("carbon_kg"))["avg"]
+
+        emissions_by_transport_method = (
+            estimates
+            .values("transport_method")
+            .annotate(total=Sum("carbon_kg"))
+        )
+
+        daily_emissions_raw = (
+            estimates
+            .values("estimated_at__date")
+            .annotate(total=Sum("carbon_kg"))
+        )
+
+        daily_emissions = {
+            item["estimated_at__date"].isoformat(): item["total"]
+            for item in daily_emissions_raw
+        }
+
+        return Response({
+            "total_emissions_kg": round(total_emissions_kg, 2),
+            "avg_carbon_intensity": round(avg_carbon_intensity, 8) if avg_carbon_intensity else None,
+            "avg_emission_per_route": round(avg_emission_per_route, 2) if avg_emission_per_route else None,
+            "emissions_by_transport_method": {
+                item["transport_method"]: round(item["total"], 2)
+                for item in emissions_by_transport_method
+            },
+            "daily_emissions": daily_emissions
         })
