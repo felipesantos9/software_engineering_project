@@ -41,7 +41,7 @@ export const getTrips = async (token: string,) => {
       Authorization: `Token ${token}`,
     };
     const response = await api.get("estimates/list/", { headers, });
-    const data = response.data.results;
+    const data = response.data;
     return data;
   } catch (error: any) {
     return error.code;
