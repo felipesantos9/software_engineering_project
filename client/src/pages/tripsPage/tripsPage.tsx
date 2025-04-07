@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import useUser from '../../hooks/useUser';
 import UnitConverter from 'unit-converter'; // Biblioteca alternativa para conversão de unidades
 import HeaderMain from '../../components/headerMain/headerMain';
 import './tripsPageStyle.css';
@@ -18,6 +20,15 @@ interface TripData {
 }
 
 function TripsPage() {
+  const { user } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.auth == false) {    
+      navigate('/login')
+    } 
+  }, []);
+
   const [trips] = useState<TripData[]>([
     {
       id: 1,

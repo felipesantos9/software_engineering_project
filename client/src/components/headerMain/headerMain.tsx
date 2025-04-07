@@ -17,6 +17,7 @@ interface ButtonOptionProps {
 function HeaderMain() {
     const { user, logoutUser } = useUser();
     const navigate = useNavigate();
+    console.log(user)
 
     function ButtonOption ({content, path}: ButtonOptionProps) {
         
@@ -69,7 +70,7 @@ function HeaderMain() {
             <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button className="headerMain-company-title">
-          Empresa ABC
+          {user.auth ? user.name: 'Empresa ABC'}  
         </button>
       </DropdownMenu.Trigger>
 
