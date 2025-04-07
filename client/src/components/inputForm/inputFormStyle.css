@@ -1,0 +1,46 @@
+.input-container-style {
+    margin: 10px;
+}
+
+.input-style {
+    border-radius: 5px;
+    height: 30px;
+    width: 350px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #88C425;
+    position: relative;
+    margin: 5px;
+    text-indent: 5px;
+    outline: none;
+}
+
+.input-style:hover {
+    border-color: #79ad24;
+}
+.input-style:focus {
+    border-color: #527717;
+}
+
+.label-style {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/*Ajustar isso aqui depois (principalmente esse processo de position e o tamanho dele)*/
+.button-style {
+    align-items: center;
+    margin-left: 310px;
+    margin-top: 10px;
+    border: 0px;    
+    border-radius: 10px;
+    background-color: transparent;
+    width: 60px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+}

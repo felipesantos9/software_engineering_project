@@ -1,0 +1,68 @@
+.headerMain-style {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 109px;
+    padding: 10px 60px 10px 60px;       
+}
+
+.headerMain-logo {
+    color: #1B676B;
+}
+
+.headerMain-center-options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.button-option-style {
+   font-family: 'Roboto';
+   font-size: 20px;
+   color: #6D7973;
+   font-weight: bold;
+   border: none;  
+   background-color: #FFFFFF;  
+   cursor: pointer;
+}
+
+.headerMain-company-title {
+    font-family: 'Roboto';
+    font-size: 20px;
+    color: #000;
+    font-weight: bold;
+    border: none;  
+    background-color: #FFFFFF;  
+    cursor: pointer; 
+}
+
+.headerMain-company-title-border {
+    position: relative;
+    padding: 10px 16px;
+    margin-top: 8px;
+    background-color: #6D7973;
+    border-radius: 8px;
+    color: white;
+    width: max-content;
+    font-family: 'Roboto';
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.headerMain-company-title-border::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #6D7973 transparent;
+}
+
+.headerMain-company-title-item {
+    cursor: pointer;
+    padding: 4px 8px; 
+}

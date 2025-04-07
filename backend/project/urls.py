@@ -14,9 +14,32 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView  # noqa: E501
+
 from django.contrib import admin
-from django.urls import path
+from django.http import HttpResponseRedirect
+from django.urls import path, include
+
 
 urlpatterns = [
+    # Local
+    path("", lambda request: HttpResponseRedirect("api/docs/swagger/")),
     path('admin/', admin.site.urls),
+    path("api/estimates/", include("estimates.urls")),
+
+    # Thrid-party
+    path('api-auth/', include('rest_framework.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/docs/swagger/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "api/docs/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
 ]

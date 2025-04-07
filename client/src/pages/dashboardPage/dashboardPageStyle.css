@@ -1,0 +1,120 @@
+.container {
+  padding: 0 60px;
+}
+
+.title {
+  font-size: 2rem;
+  color: #1b676b;
+  font-weight: bold;
+  margin: 0;
+}
+
+.description {
+  color: #6d7973;
+  margin: 0;
+  margin-top: 10px;
+  font-weight: light;
+  margin-bottom: 1rem;
+}
+
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.container-info {
+  border: 1px solid #88c425;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.container-info h3 {
+  font-size: 20px;
+  margin: 0;
+  padding-bottom: 1rem;
+}
+.container-info p {
+  font-size: 38px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.buttons-last {
+  background-color: white;
+  border: 1px solid #eaeaea;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+/* Tive que usar important, ele tava pegando css de outro lugar nada haver ( nao sei como */
+.buttons-last button {
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  color: black !important;
+  font-size: 16px !important;
+  padding: 8px !important;
+  border-radius: 10px;
+  font-weight: 700;
+}
+.buttons-last button.selected {
+  background-color: #dbdbdb !important;
+}
+
+.buttons-and-search {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search input {
+  border-radius: 5px;
+  height: 34px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #88c425;
+  margin: 5px;
+  padding: 0 8px;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
+}
+.infos {
+  display: grid;
+  grid-template-columns: repeat(4, calc(25% - 0.5rem));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.graphs {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.graphs div {
+  border: 1px solid #88c425;
+  border-radius: 8px;
+  padding: 1rem;
+  height: 400px;
+}
+
+@media (max-width: 1024px) {
+  .infos {
+    grid-template-columns: repeat(2, calc(50% - 0.1rem));
+  }
+  .graphs {
+  grid-template-columns: 100%;
+
+  }
+}
+
+
+@media (max-width: 750px) {
+  .infos {
+    grid-template-columns: repeat(1, calc(100% + 1rem));
+  }
+}

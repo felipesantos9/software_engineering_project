@@ -1,0 +1,74 @@
+.registrationPage-container {
+    font-family: "Roboto", serif;
+    background-color: white;
+    color: #1B676B;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    width: 600px;
+
+    padding: 3rem 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+    border-width: 1px;
+}
+
+.bottom-paragraph-register-elements {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-text {
+    color: #88C425;
+    margin-top: 20px;
+}
+
+html, body {
+    height: 100vh;
+    margin: 0;
+}
+
+.registration-bg {
+    background-color: #EAFDE6;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-text a{
+    color: #88C425;
+    text-decoration: none;
+}
+.login-text a:hover{
+    color: #79ad24;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .registrationPage-container {
+        width: 100vw;
+        height: 100vh;
+        padding: 20px;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25);
+
+    }
+
+    .bottom-paragraph-register-elements {
+        font-size: 14px;
+    }
+
+    .login-text {
+        font-size: 16px;
+    }
+}
+
+@media (max-height: 650px) {
+    .registration-bg {
+        align-items: start;
+    
+    }
+}
