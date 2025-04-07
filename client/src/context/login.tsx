@@ -20,11 +20,15 @@ export default function UserProvider({ children }: IChildrenUserProvider) {
   const [cookies, setCookie] = useCookies(["user-token"]);
 
   const [user, setUser] = useState<loginDataContext>({
-    auth: false,
-    username: 'Visitor',
-    token: null,
+    name: '',
+    cnpj: '',
     id: NaN,
-    role: 'user',
+    email: '',
+    picture: '',
+    is_verified: false,
+    phone_number: '',
+    token: '',
+    auth: false
   });
 
 
@@ -66,12 +70,17 @@ export default function UserProvider({ children }: IChildrenUserProvider) {
 
   function handleLogout() {
     setUser({
-      auth: false,
-      username: "Visitor",
-      token: null,
+      name: '',
+      cnpj: '',
       id: NaN,
-      role: "user",
-    });
+      email: '',
+      picture: '',
+      is_verified: false,
+      phone_number: '',
+      token: '',
+      auth: false
+    });    
+    setCookie("user-token", "");
   };
 
   return (
