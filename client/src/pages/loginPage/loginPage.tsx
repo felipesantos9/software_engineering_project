@@ -39,9 +39,9 @@ function LoginPage() {
     }, [errors]);
 
     useEffect(() => {
-        if (user.auth) {
+        if (user.auth) {            
             navigate('/');
-        }
+        };
     }, [user]);
 
 
