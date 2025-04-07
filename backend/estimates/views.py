@@ -144,7 +144,7 @@ class EmissionsReportPDFView(APIView):
             end_date = make_aware(
                 datetime.fromisoformat(request.query_params["end_date"])
             )
-        except Exception:
+        except ValueError:
             raise ValidationError(
                 "Parâmetros 'start_date' e 'end_date' devem estar no formato "
                 "ISO: yyyy-mm-dd"
@@ -223,7 +223,7 @@ class DashboardDataView(APIView):
             end_date = make_aware(
                 datetime.fromisoformat(request.query_params["end_date"])
             )
-        except Exception:
+        except ValueError:
             raise ValidationError(
                 (
                     "Parâmetros 'start_date' e 'end_date' devem estar no "
