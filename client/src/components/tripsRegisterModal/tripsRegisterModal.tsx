@@ -6,8 +6,10 @@ import { tripSchema } from '../../schemas/trip';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast, { Toaster } from 'react-hot-toast';
+import { tripRegisterRequest } from '../../services/api/tripsRequest';
 import { Dialog } from "radix-ui";
 import { RxCross1 } from "react-icons/rx";
+
 function TripsRegisterPage() {
 
     const {
@@ -35,11 +37,22 @@ function TripsRegisterPage() {
         ship: "Navio",
     };
 
+    const registerFunc = async (content: TripInterface) => {
+        console.log("testetestests")
+        const data = await tripRegisterRequest(content);
+        if (data) {
+            toast.success("Registro realizado com sucesso!", {duration: 2000})
+        } else {
+            toast.error("Falha ao criar o registro. Tente novamente!", {duration: 2000})
+        };
+    };
+
     return (        
         <Dialog.Portal>
             <Dialog.Overlay className="DialogOverlay" />
             <Dialog.Content className="DialogContent">
-                <form className='trip-form'>
+                <Dialog.Title></Dialog.Title>
+                <form className='trip-form' onSubmit={handleSubmit(registerFunc)}>
                     <div className='header-group'>
                         <div>
 
@@ -56,12 +69,6 @@ function TripsRegisterPage() {
                     </div>
                     <p className='type'>Tipo de transporte</p>
                     <div className='container-form'>
-                        <div className="type-radios">
-                            <label>
-                                <input type="radio" name='type' checked />
-                                Logística e distribuição
-                            </label>
-                        </div>
                         <TrisInput
                             inputId="weight_value"
                             labelTitle="Peso total"

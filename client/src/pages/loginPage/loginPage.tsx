@@ -40,7 +40,7 @@ function LoginPage() {
 
     useEffect(() => {
         if (user.auth) {            
-            navigate('/');
+            navigate('/trips');
         };
     }, [user]);
 
@@ -71,7 +71,7 @@ function LoginPage() {
                 toast.success("Login deu certo :)", { duration: 2000 });
                 setTimeout(() => {
                     setButtonIsDisabled(false);
-                    navigate('/');
+                    navigate('/trips');
                 }, 2000);
                 return;
             }

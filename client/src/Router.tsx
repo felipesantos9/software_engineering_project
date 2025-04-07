@@ -6,6 +6,7 @@ import HomeScreenPage from "./pages/homeScreenPage/homeScreenPage";
 import RegistrationPage from "./pages/registerPage/registerPage";
 import TripsRegisterPage from "./components/tripsRegisterModal/tripsRegisterModal";
 import TripsPage from "./pages/tripsPage/tripsPage";
+import DashboardPage from "./pages/dashboardPage/dashboard";
 
 
 
@@ -18,7 +19,7 @@ function Router() {
         <Route path="/updatepassword" element={<UpdatePasswordPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/" element={<HomeScreenPage />} />
-        <Route path="/trips/register" element={<TripsRegisterPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />      
         <Route path="/trips" element={<TripsPage />} />
       </Routes>
     </BrowserRouter>

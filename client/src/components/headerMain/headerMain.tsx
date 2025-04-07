@@ -50,7 +50,7 @@ function HeaderMain() {
                 
                 <ButtonOption
                 content="Início"
-                path="/login"/>
+                path="/"/>
 
                 <ButtonOption
                 content="Dashboard"
@@ -58,11 +58,11 @@ function HeaderMain() {
 
                 <ButtonOption
                 content="Relatório"
-                path="/"/>
+                path="/trips"/>
 
                 <ButtonOption
                 content="Registrar Dados"
-                path="/"/>
+                path="/trips"/>
                                                                 
             </div>
             
