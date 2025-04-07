@@ -13,9 +13,9 @@ urlpatterns = [
         name='list_estimate',
     ),
     path(
-        "relatorio-emissoes/",
+        "emissions-report/",
         EmissionsReportPDFView.as_view(),
-        name="relatorio-emissoes",
+        name="emissions-report",
     ),
     path(
         "dashboard/",
