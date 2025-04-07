@@ -16,7 +16,7 @@ import { userLoginSchema } from "../../schemas/company";
 function LoginPage() {
     const { updateUser, user } = useUser();
     const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
-    const [cookies, setCookie] = useCookies(["user-token"]);
+    const [, setCookie] = useCookies(["user-token"]);
 
     const navigate = useNavigate();
 

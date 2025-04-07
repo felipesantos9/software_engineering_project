@@ -21,7 +21,6 @@ interface InfoProps {
 }
 
 export default function DashboardPage() {
-  const [button, setButton] = useState<"yearly" | "monthly">("yearly");
   const { user } = useUser();
 
   // Estados para armazenar os dados da API
@@ -130,7 +129,7 @@ export default function DashboardPage() {
                 dataKey="value"
                 label
               >
-                {emissionsByTransport.map((entry, index) => (
+                {emissionsByTransport.map((_entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
