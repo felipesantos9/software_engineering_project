@@ -2,7 +2,6 @@
 import Logo from "../logo/logo";
 import "./headerMainStyle.css";
 import { useNavigate } from "react-router";
-import Dropdown from 'react-bootstrap/Dropdown';
 import useUser from "../../hooks/useUser";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 

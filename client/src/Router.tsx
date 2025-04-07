@@ -4,7 +4,6 @@ import UpdatePasswordPage from "./pages/updatePasswordPage/updatePasswordPage";
 import ForgotPasswordPage from "./pages/forgotPasswordPages/forgotPasswordPage";
 import HomeScreenPage from "./pages/homeScreenPage/homeScreenPage";
 import RegistrationPage from "./pages/registerPage/registerPage";
-import TripsRegisterPage from "./components/tripsRegisterModal/tripsRegisterModal";
 import TripsPage from "./pages/tripsPage/tripsPage";
 import DashboardPage from "./pages/dashboardPage/dashboard";
 

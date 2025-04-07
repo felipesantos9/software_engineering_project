@@ -1,18 +1,10 @@
 import { ReactNode, useEffect, useState, createContext } from "react";
-import { jwtDecode } from 'jwt-decode'; // Codificação do token
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { getInfoToken } from "../services/api/authRequest";
 
 interface IChildrenUserProvider {
   children: ReactNode;
 };
-
-interface IJwtPayload {
-  username: string;
-  id: number;
-  role: 'user';
-}
 
 export const UserContext = createContext<loginContext | null>(null);
 
