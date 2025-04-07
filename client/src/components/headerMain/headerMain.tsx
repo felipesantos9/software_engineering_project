@@ -32,10 +32,10 @@ function HeaderMain() {
         );
     };
 
-    const logout = () => {        
-        console.log(user);
-        logoutUser();
-        console.log(user);
+    const logout = () => {
+        if (user) {
+            logoutUser();        
+        };                                
         navigate('/');
     };
 

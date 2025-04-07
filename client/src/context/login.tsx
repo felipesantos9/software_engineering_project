@@ -79,7 +79,8 @@ export default function UserProvider({ children }: IChildrenUserProvider) {
       phone_number: '',
       token: '',
       auth: false
-    });
+    });    
+    setCookie("user-token", "");
   };
 
   return (
