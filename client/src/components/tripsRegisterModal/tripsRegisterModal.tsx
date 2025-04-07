@@ -35,7 +35,7 @@ function TripsRegisterPage() {
         ship: "Navio",
     };
 
-    return (
+    return (        
         <Dialog.Portal>
             <Dialog.Overlay className="DialogOverlay" />
             <Dialog.Content className="DialogContent">
