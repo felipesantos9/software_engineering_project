@@ -27,8 +27,27 @@ A estrutura do backend é baseada no **Django REST Framework**, com organizaçã
 
 #### Estrutura Principal
 
-- **`models/`**  
-  Define as estruturas de dados e regras de negócio associadas ao banco de dados.
+- **`project/`**  
+  Armazena as configurações principais da aplicação, definindo banco de dados, acessando variáveis de ambiente e middlewares.
+
+- **`user/`**  
+  App responsável pelo gerenciamento de usuários, com autenticação, serialização e lógica personalizada.
+
+- **`estimates/`**  
+  App que contém a lógica relacionada aos cálculos e envio de dados das emissões de carbono e seus respectivos endpoints.
+
+- **`manage.py`**  
+  Script utilitário que serve como ponto de entrada para administrar um projeto Django
+
+- **`.env`**  
+  Arquivo de declaração das variáveis de ambiente
+
+- **`requirements.txt`**  
+  Armazena as dependências da aplicação e suas versões.
+
+  
+
+#### Pastas das Apps
 
 - **`serializers/`**  
   Responsáveis por converter dados complexos (como objetos do banco) para formatos simples (ex: JSON), além de realizar validações.
@@ -39,20 +58,9 @@ A estrutura do backend é baseada no **Django REST Framework**, com organizaçã
 - **`urls/`**  
   Define os endpoints da API e o roteamento interno.
 
-#### Pastas Adicionais
-
-- **`project/`**  
-  Armazena as configurações principais da aplicação, incluindo banco de dados, variáveis de ambiente e middlewares.
-
-- **`user/`**  
-  Responsável pelo gerenciamento de usuários, com autenticação, serialização e lógica personalizada.
-
-- **`estimates/`**  
-  Contém a lógica relacionada aos cálculos de emissões de carbono e seus respectivos endpoints.
-
-- **`migrations/`**  
-  Histórico de versões e alterações no banco de dados (gerado automaticamente pelo Django).
-
+- **`models/`**  
+  Define as estruturas de dados e regras de negócio associadas ao banco de dados.
+  
 - **`tests/`**  
   Testes unitários e de integração para garantir a qualidade e o funcionamento correto da aplicação.
 
